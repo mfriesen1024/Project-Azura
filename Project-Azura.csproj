@@ -4,4 +4,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>ProjectAzura</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="RPGSystem" Version="1.0.0" />
+  </ItemGroup>
 </Project>
