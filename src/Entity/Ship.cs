@@ -4,39 +4,38 @@ using RPGSystem.Stats;
 using RPGSystem.Systems;
 using RPGSystem.Util;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectAzura.src.Entity
 {
     internal class Ship : EntityBase
     {
+        InitiativeSystem initiativeSystem;
+
         /// <summary>
         /// Called when our turn starts.
         /// </summary>
         public Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
 
-        public Ship(ShipStatController statController) : base(statController)
-        {
-        }
-
-        public Ship(ShipStatController statController, CrewMember[] crew, int teamID) : base(statController)
-        {
-            Crew = crew;
-            this.teamID = teamID;
-        }
-
+        /// <summary>
+        /// Array of crew members on board the ship.
+        /// </summary>
         public CrewMember[] Crew { get; protected set; }
 
         /// <summary>
         /// 0 is player team, anything else is its own team.
         /// </summary>
         public int teamID { get; protected set; }
-        public Vector2S Location = new(0,0);
+
+        public Vector2S Location = new(0, 0);
+
         public int defaultMovement;
         public bool hasMoved;
+
+        public Ship(ShipStatController statController, CrewMember[] crew, int teamID) : base(statController)
+        {
+            Crew = crew;
+            this.teamID = teamID;
+        }
 
         public void Attack(EntityBase target, CrewMember crewMember)
         {
@@ -53,7 +52,7 @@ namespace ProjectAzura.src.Entity
         public void Move(Vector2S newLoc, CrewMember crewMember)
         {
             // Check that the location is valid, then move the ship there.
-            Vector2S[] instructions = NavigationSystem.Instance.TryFindPath(Location,newLoc);
+            Vector2S[] instructions = NavigationSystem.Instance.TryFindPath(Location, newLoc);
             if (instructions.Length > 0 && instructions.Length < defaultMovement)
             {
                 foreach (Vector2S instruction in instructions)
@@ -81,12 +80,14 @@ namespace ProjectAzura.src.Entity
             if (shouldHalt) { TurnStart(this); }
             else { ExecuteFoeTurn(); }
 
-            
+
         }
 
         void ExecuteFoeTurn()
         {
-            throw new NotImplementedException();
+            // Foes always move first.
+
+            
         }
 
         void UseCrewTurn(CrewMember crewMember)
