@@ -1,0 +1,3 @@
+[submodule "rpgbase"]
+	path = rpgbase
+	url = https://github.com/mfriesen1024/RPGSystem.git
