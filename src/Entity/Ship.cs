@@ -129,7 +129,7 @@ namespace ProjectAzura.src.Entity
 
         void UseCrewTurn(CrewMember crewMember)
         {
-            throw new NotImplementedException();
+            crewMember.HasActed = true;
         }
     }
 }
