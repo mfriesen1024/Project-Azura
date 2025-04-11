@@ -1,4 +1,5 @@
 using Godot;
+using ProjectAzura.src.Character;
 using RPGSystem.Entity;
 using RPGSystem.Stats;
 using RPGSystem.Systems;
@@ -9,6 +10,7 @@ namespace ProjectAzura.src.Entity
 {
     internal class Ship : EntityBase
     {
+        // We somehow need a reference to the initiative system. How we get it? Not sure.
         InitiativeSystem initiativeSystem;
 
         /// <summary>
@@ -25,8 +27,6 @@ namespace ProjectAzura.src.Entity
         /// 0 is player team, anything else is its own team.
         /// </summary>
         public int teamID { get; protected set; }
-
-        public Vector2S Location = new(0, 0);
 
         public int defaultMovement;
         public bool hasMoved;
