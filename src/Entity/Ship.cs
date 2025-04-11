@@ -106,6 +106,25 @@ namespace ProjectAzura.src.Entity
                     Move(newLoc, crewMember);
                 }
             }
+
+            // If our locations match, we're next to our target, open fire!
+            if (newLoc == Location)
+            {
+                foreach(CrewMember crewMember in Crew)
+                {
+                    // If a crewmember can attack, do it.
+                    if (crewMember.AvailableActions.ToList().Contains(ActionType.Attack) && !crewMember.HasActed)
+                    {
+                        Attack(target, crewMember);
+                    }
+                }
+            }
+            
+            // Everyone else should play defensively.
+            foreach(CrewMember crewMember in Crew)
+            {
+                if (!crewMember.HasActed) { Repair(crewMember); }
+            }
         }
 
         void UseCrewTurn(CrewMember crewMember)
