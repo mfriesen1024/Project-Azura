@@ -5,6 +5,7 @@ using RPGSystem.Stats;
 using RPGSystem.Systems;
 using RPGSystem.Util;
 using System;
+using System.Linq;
 
 namespace ProjectAzura.src.Entity
 {
@@ -87,7 +88,24 @@ namespace ProjectAzura.src.Entity
         {
             // Foes always move first.
 
-            
+            // Get a target and path.
+            EntityBase target = NavigationSystem.Instance.FindNearestFoe(false, Location);
+            Vector2S[] path = NavigationSystem.Instance.TryFindPath(Location, target.Location);
+            // Ensure we don't try to move onto the target by giving an idle instruction. This should be revised later.
+            if (path.Length > 0) { path[path.Length - 1] = new(0, 0); }
+
+            // Get new location.
+            Vector2S newLoc = Location;
+            foreach (Vector2S instruction in path) { newLoc += instruction; }
+
+            // If we dont have a suitable helmsman, we dont end up doing anything.
+            foreach (CrewMember crewMember in Crew)
+            {
+                if (crewMember.AvailableActions.ToList().Contains(ActionType.Move))
+                {
+                    Move(newLoc, crewMember);
+                }
+            }
         }
 
         void UseCrewTurn(CrewMember crewMember)
