@@ -5,6 +5,8 @@
     <RootNamespace>ProjectAzura</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="RPGSystem" Version="1.0.0" />
+    <Reference Include="RPGSystem">
+      <HintPath>..\RPGSystem\RPGSystem\bin\Debug\net8.0\RPGSystem.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
