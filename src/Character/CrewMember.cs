@@ -3,7 +3,20 @@ namespace ProjectAzura.src.Character
     /// <summary>
     /// Represents a crew member character, and has references to any sprites needed for it.
     /// </summary>
-    public class CrewMember:CharacterBase
+    public class CrewMember : CharacterBase
     {
+        /// <summary>
+        /// Determines what this CrewMember can do.
+        /// </summary>
+        // Specialized classes will be needed to do more.
+        // This is not static because we want to need a class instance to determine actions.
+        public ActionType[] AvailableActions { get; protected set; } = [ActionType.Repair, ActionType.Brace];
+
+        public bool HasActed;
+
+        /// <summary>
+        /// How strong should this crew member's actions be? Impacts all actions but move.
+        /// </summary>
+        public float PowerModifier { get; protected set; } = 1;
     }
 }
