@@ -14,14 +14,15 @@ namespace ProjectAzura.src.EngineObjects.Resources
         [Export] TypeModifierConstructor typeData;
         [Export] BaseStatsConstructor stats;
         [Export] CrewMemberData[] crewData;
-        CrewMember[] crew { get { return ManualCast(); } }
+        CrewMember[] crew { get { return CastDataToFormattedArray(); } }
 
-        private CrewMember[] ManualCast()
+        private CrewMember[] CastDataToFormattedArray()
         {
             CrewMember[] newArray = new CrewMember[crewData.Length];
             for (int i = 0; i < crewData.Length; i++) {
                 newArray[i] = crewData[i];
             }
+            return newArray;
         }
 
         [Export] int teamID;
