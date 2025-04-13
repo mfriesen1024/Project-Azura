@@ -1,5 +1,7 @@
 using Godot;
 using ProjectAzura.src.EngineObjects.Resources;
+using ProjectAzura.src.Entity;
+using ProjectAzura.src.Management;
 using RPGSystem.Encounter;
 using RPGSystem.Util;
 using System;
@@ -33,7 +35,10 @@ namespace ProjectAzura.src.EngineObjects
                 }
             }
 
-            InternalMapData = new() { Map = tiles };
+            // need a resource to fill constructor.
+            Ship[] foes = null;
+
+            InternalMapData = new() { Map = tiles, Party = GameManager.Party, FoeList=foes };
         }
     }
 }
