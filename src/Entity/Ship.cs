@@ -17,7 +17,7 @@ namespace ProjectAzura.src.Entity
         /// <summary>
         /// Called when our turn starts.
         /// </summary>
-        public Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
+        public static Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
 
         /// <summary>
         /// Array of crew members on board the ship.
