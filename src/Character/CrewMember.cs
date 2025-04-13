@@ -14,6 +14,14 @@ namespace ProjectAzura.src.Character
 
         public bool HasActed;
 
+        public CrewMember()
+        {
+        }
+
+        public CrewMember(string[][] dialogue) : base(dialogue)
+        {
+        }
+
         /// <summary>
         /// How strong should this crew member's actions be? Impacts all actions but move.
         /// </summary>
