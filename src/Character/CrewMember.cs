@@ -20,7 +20,7 @@ namespace ProjectAzura.src.Character
 
         public CrewMember(ActionType[] availableActions, float powerModifier)
         {
-            AvailableActions = availableActions;
+            if (availableActions != null && availableActions.Length > 0) { AvailableActions = availableActions; }
             PowerModifier = powerModifier;
         }
 
