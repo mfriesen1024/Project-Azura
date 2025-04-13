@@ -18,8 +18,10 @@ namespace ProjectAzura.src.Character
         {
         }
 
-        public CrewMember(string[][] dialogue) : base(dialogue)
+        public CrewMember(ActionType[] availableActions, float powerModifier)
         {
+            AvailableActions = availableActions;
+            PowerModifier = powerModifier;
         }
 
         /// <summary>
