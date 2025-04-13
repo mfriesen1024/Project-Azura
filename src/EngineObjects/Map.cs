@@ -28,7 +28,7 @@ namespace ProjectAzura.src.EngineObjects
 
             for (int x = 0; x < ubound.X; x++)
             {
-                for (int y = 0; x < ubound.Y; y++)
+                for (int y = 0; y < ubound.Y; y++)
                 {
                     try { tiles[x, y] = hazardTable.IDToTile(GetCellAlternativeTile(new(x, y))); }
                     // oob tiles are considered impassible, they can be ignored, but log it anyway.
