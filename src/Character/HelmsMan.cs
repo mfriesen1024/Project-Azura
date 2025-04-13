@@ -12,6 +12,8 @@ namespace ProjectAzura.src.Character
             var actions = AvailableActions.ToList();
             actions.Add(ActionType.Attack);
             AvailableActions = actions.ToArray();
+
+            PowerModifier = 1.2f;
         }
     }
 }
