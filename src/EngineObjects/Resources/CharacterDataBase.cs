@@ -5,7 +5,8 @@ namespace ProjectAzura.src.EngineObjects.Resources
     [GlobalClass]
     internal abstract partial class CharacterDataBase : Resource
     {
-        [Export] string[,] dialogue;
+        //[Export] 
+        string[,] dialogue;
         protected string[][] FormattedDialogue { get => FormatDialogue(dialogue); }
 
         string[][] FormatDialogue(string[,] dialogue)
