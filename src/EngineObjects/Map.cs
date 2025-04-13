@@ -1,13 +1,14 @@
 using Godot;
 using ProjectAzura.src.EngineObjects.Resources;
 using RPGSystem.Encounter;
+using RPGSystem.Util;
+using System;
 
 namespace ProjectAzura.src.EngineObjects
 {
     partial class Map : TileMapLayer
     {
-        // The upper and lower bounds
-        [Export(PropertyHint.None, "The -x -y corner of the map.")] Vector2I lbound;
+        // The upper bounds. We should only use positive coordinates so things don't break.
         [Export(PropertyHint.None, "The +x +y corner of the map.")] Vector2I ubound;
         [Export(PropertyHint.ResourceType, "HazardTable")] HazardTable hazardTable;
         public Area InternalMapData { get; protected set; }
@@ -16,6 +17,23 @@ namespace ProjectAzura.src.EngineObjects
         public override void _Ready()
         {
             base._Ready();
+
+            // Offset ubound by +1 to avoid offbyone errors
+            ubound += Vector2I.One;
+
+            Tile[,] tiles = new Tile[ubound.X, ubound.Y];
+
+            for (int x = 0; x < ubound.X; x++)
+            {
+                for (int y = 0; x < ubound.Y; y++)
+                {
+                    try { tiles[x, y] = hazardTable.IDToTile(GetCellAlternativeTile(new(x, y))); }
+                    // oob tiles are considered impassible, they can be ignored, but log it anyway.
+                    catch (IndexOutOfRangeException ior) { GD.PushWarning(ior); }
+                }
+            }
+
+            InternalMapData = new() { Map = tiles };
         }
     }
 }
