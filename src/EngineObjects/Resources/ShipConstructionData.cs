@@ -14,9 +14,16 @@ namespace ProjectAzura.src.EngineObjects.Resources
         [Export] TypeModifierConstructor typeData;
         [Export] BaseStatsConstructor stats;
         [Export] CrewMemberData[] crewData;
-#pragma warning disable CA2021 // Types are confirmed compatible.
-        CrewMember[] crew { get { return (CrewMember[])crewData.Cast<CrewMember>(); } }
-#pragma warning restore CA2021
+        CrewMember[] crew { get { return ManualCast(); } }
+
+        private CrewMember[] ManualCast()
+        {
+            CrewMember[] newArray = new CrewMember[crewData.Length];
+            for (int i = 0; i < crewData.Length; i++) {
+                newArray[i] = crewData[i];
+            }
+        }
+
         [Export] int teamID;
 
         public static implicit operator Ship(ShipConstructionData res)

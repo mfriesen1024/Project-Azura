@@ -38,8 +38,7 @@ namespace ProjectAzura.src.EngineObjects
             Ship[] foes = new Ship[FoeData.Length];
             for (int i = 0; i < FoeData.Length; i++)
             {
-                ShipConstructionData data = FoeData[i];
-                foes[i] = data;
+                foes[i] = FoeData[i];
             }
 
             InternalMapData = new() { Map = tiles, Party = GameManager.Party, FoeList = foes };
