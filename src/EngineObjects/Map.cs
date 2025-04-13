@@ -5,6 +5,7 @@ using ProjectAzura.src.Management;
 using RPGSystem.Encounter;
 using RPGSystem.Util;
 using System;
+using System.Linq;
 
 namespace ProjectAzura.src.EngineObjects
 {
@@ -14,7 +15,7 @@ namespace ProjectAzura.src.EngineObjects
         [Export(PropertyHint.None, "The +x +y corner of the map.")] Vector2I ubound;
         [Export(PropertyHint.ResourceType, "HazardTable")] HazardTable hazardTable;
         public Area InternalMapData { get; protected set; }
-
+        [Export] ShipConstructionData[] FoeData;
 
         public override void _Ready()
         {
@@ -35,8 +36,9 @@ namespace ProjectAzura.src.EngineObjects
                 }
             }
 
-            // need a resource to fill constructor.
-            Ship[] foes = null;
+#pragma warning disable CA2021 // Types confirmed compatible.
+            Ship[] foes = (Ship[])FoeData.Cast<Ship>();
+#pragma warning restore CA2021 
 
             InternalMapData = new() { Map = tiles, Party = GameManager.Party, FoeList=foes };
         }
