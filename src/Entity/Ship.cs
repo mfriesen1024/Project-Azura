@@ -80,13 +80,11 @@ namespace ProjectAzura.src.Entity
             // Handle turn deferring.
             if (shouldHalt) { TurnStart(this); }
             else { ExecuteFoeTurn(); }
-
-
         }
 
         void ExecuteFoeTurn()
         {
-            // Foes always move first.
+            // Foes always move before taking other actions.
 
             // Get a target and path.
             EntityBase target = NavigationSystem.Instance.FindNearestFoe(false, Location);
@@ -110,7 +108,7 @@ namespace ProjectAzura.src.Entity
             // If our locations match, we're next to our target, open fire!
             if (newLoc == Location)
             {
-                foreach(CrewMember crewMember in Crew)
+                foreach (CrewMember crewMember in Crew)
                 {
                     // If a crewmember can attack, do it.
                     if (crewMember.AvailableActions.ToList().Contains(ActionType.Attack) && !crewMember.HasActed)
@@ -119,9 +117,9 @@ namespace ProjectAzura.src.Entity
                     }
                 }
             }
-            
+
             // Everyone else should play defensively.
-            foreach(CrewMember crewMember in Crew)
+            foreach (CrewMember crewMember in Crew)
             {
                 if (!crewMember.HasActed) { Repair(crewMember); }
             }
