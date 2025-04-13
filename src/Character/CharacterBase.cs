@@ -9,7 +9,16 @@ namespace ProjectAzura.src.Character
     // Wait, should this be an interface? idk.
     public abstract class CharacterBase
     {
-        protected string[][] dialogue;
+        protected string[][] dialogue = [];
+
+        protected CharacterBase()
+        {
+        }
+
+        protected CharacterBase(string[][] dialogue)
+        {
+            this.dialogue = dialogue;
+        }
 
         public virtual void PlayDialogue(int index)
         {
