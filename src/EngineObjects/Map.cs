@@ -1,4 +1,5 @@
 using Godot;
+using ProjectAzura.src.EngineObjects.Resources;
 using RPGSystem.Encounter;
 
 namespace ProjectAzura.src.EngineObjects
@@ -7,7 +8,7 @@ namespace ProjectAzura.src.EngineObjects
     {
         // The upper and lower bounds
         [Export(PropertyHint.None, "The -x -y corner of the map.")] Vector2I lbound;
-        [Export(PropertyHint.None, "The -x -y corner of the map.")] Vector2I ubound;
+        [Export(PropertyHint.None, "The +x +y corner of the map.")] Vector2I ubound;
         [Export(PropertyHint.ResourceType, "HazardTable")] HazardTable hazardTable;
         public Area InternalMapData { get; protected set; }
 
