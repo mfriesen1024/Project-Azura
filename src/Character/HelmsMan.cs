@@ -3,7 +3,7 @@ using System.Linq;
 namespace ProjectAzura.src.Character
 {
     /// <summary>
-    /// A crew member capable of moving the ship.
+    /// A crew member capable of moving the ship with a decent multiplier.
     /// </summary>
     class HelmsMan : CrewMember
     {
