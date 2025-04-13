@@ -1,5 +1,6 @@
 using Godot;
 using ProjectAzura.src.Entity;
+using RPGSystem.Entity;
 using System;
 
 namespace ProjectAzura.src.Management
@@ -9,6 +10,8 @@ namespace ProjectAzura.src.Management
     /// </summary>
     partial class GameManager : Node
     {
+        public static EntityBase[] Party { get; internal set; }
+
         public override void _Ready()
         {
             base._Ready();
