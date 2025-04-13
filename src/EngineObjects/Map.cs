@@ -5,7 +5,6 @@ using ProjectAzura.src.Management;
 using RPGSystem.Encounter;
 using RPGSystem.Util;
 using System;
-using System.Linq;
 
 namespace ProjectAzura.src.EngineObjects
 {
@@ -36,11 +35,14 @@ namespace ProjectAzura.src.EngineObjects
                 }
             }
 
-#pragma warning disable CA2021 // Types confirmed compatible.
-            Ship[] foes = (Ship[])FoeData.Cast<Ship>();
-#pragma warning restore CA2021 
+            Ship[] foes = new Ship[FoeData.Length];
+            for (int i = 0; i < FoeData.Length; i++)
+            {
+                ShipConstructionData data = FoeData[i];
+                foes[i] = data;
+            }
 
-            InternalMapData = new() { Map = tiles, Party = GameManager.Party, FoeList=foes };
+            InternalMapData = new() { Map = tiles, Party = GameManager.Party, FoeList = foes };
         }
     }
 }
