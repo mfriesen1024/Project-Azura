@@ -1,5 +1,7 @@
 using Godot;
-using RPGSystem.Stats;
+using ProjectAzura.src.Character;
+using ProjectAzura.src.Entity;
+using System.Linq;
 
 namespace ProjectAzura.src.EngineObjects.Resources
 {
@@ -11,10 +13,15 @@ namespace ProjectAzura.src.EngineObjects.Resources
     {
         [Export] TypeModifierConstructor typeData;
         [Export] BaseStatsConstructor stats;
+        [Export] CrewMemberData[] crewData;
+#pragma warning disable CA2021 // Types are confirmed compatible.
+        CrewMember[] crew { get { return (CrewMember[])crewData.Cast<CrewMember>(); } }
+#pragma warning restore CA2021
+        [Export] int teamID;
 
-        public static implicit operator ShipStatController(ShipConstructionData res)
+        public static implicit operator Ship(ShipConstructionData res)
         {
-            return new(res.stats, [], res.typeData);
+            return new Ship(new(res.stats, [], res.typeData), res.crew, res.teamID);
         }
     }
 }
