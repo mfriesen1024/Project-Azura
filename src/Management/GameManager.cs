@@ -16,6 +16,15 @@ namespace ProjectAzura.src.Management
         public static GameManager Instance { get; private set; }
         public Ship[] Party { get; private set; }
         [Export] ShipConstructionData[] partyData;
+        #region UIStuff
+        [Export] PackedScene gameplayUI, loading, menus;
+        public HUD HUD { get; private set; }
+        public PlayerPhaseUI PlayerPhaseUI { get; private set; }
+        Control mainMenu;
+        Control loadScreen;
+        Control winScreen;
+        Control failScreen;
+        #endregion
 
         public override void _Ready()
         {
