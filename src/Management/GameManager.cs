@@ -10,7 +10,11 @@ namespace ProjectAzura.src.Management
     /// </summary>
     partial class GameManager : Node
     {
-        public static EntityBase[] Party { get; internal set; }
+        /// <summary>
+        /// The singleton instance of our GM.
+        /// </summary>
+        public static GameManager Instance { get; private set; }
+        public Ship[] Party { get; private set; }
 
         public override void _Ready()
         {

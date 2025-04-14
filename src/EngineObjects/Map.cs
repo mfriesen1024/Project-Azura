@@ -41,7 +41,7 @@ namespace ProjectAzura.src.EngineObjects
                 foes[i] = FoeData[i];
             }
 
-            InternalMapData = new() { Map = tiles, Party = GameManager.Party, FoeList = foes };
+            InternalMapData = new() { Map = tiles, Party = GameManager.Instance.Party, FoeList = foes };
         }
     }
 }
