@@ -1,4 +1,5 @@
 using Godot;
+using ProjectAzura.src.EngineObjects.Resources;
 using ProjectAzura.src.Entity;
 using System;
 
@@ -14,6 +15,7 @@ namespace ProjectAzura.src.Management
         /// </summary>
         public static GameManager Instance { get; private set; }
         public Ship[] Party { get; private set; }
+        [Export] ShipConstructionData[] partyData;
 
         public override void _Ready()
         {
@@ -22,10 +24,24 @@ namespace ProjectAzura.src.Management
             else { Free(); }
 
             InitEvents();
+            InitSystems();
+            InitMiscObjects();
             InitUI();
 
             // Use this to activate things when everything is initialized.
             Launch();
+        }
+
+        private void InitSystems()
+        {
+            GD.PrintErr(new NotImplementedException());
+        }
+
+        private void InitMiscObjects()
+        {
+            // Initialize party.
+            Party = new Ship[partyData.Length];
+            for (int i = 0; i < partyData.Length; i++) { Party[i] = partyData[i]; }
         }
 
         private void InitUI()
