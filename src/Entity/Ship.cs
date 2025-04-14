@@ -20,6 +20,11 @@ namespace ProjectAzura.src.Entity
         public static Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
 
         /// <summary>
+        /// A reference to our sprite engine side.
+        /// </summary>
+        public Sprite2D Sprite { get; protected set; }
+
+        /// <summary>
         /// Array of crew members on board the ship.
         /// </summary>
         public CrewMember[] Crew { get; protected set; }
@@ -32,7 +37,7 @@ namespace ProjectAzura.src.Entity
         public int defaultMovement;
         public bool hasMoved;
 
-        public Ship(ShipStatController statController, CrewMember[] crew, int teamID, Vector2I location) : base(statController)
+        public Ship(ShipStatController statController, CrewMember[] crew, int teamID, Vector2I location, PackedScene spritePrefab) : base(statController)
         {
             Crew = crew;
             this.teamID = teamID;
@@ -40,6 +45,15 @@ namespace ProjectAzura.src.Entity
             short x = (short)location.X;
             short y = (short)location.Y;
             Location = new(x,y);
+
+            Sprite = spritePrefab.Instantiate() as Sprite2D;
+            UpdateSpriteLocation(); // This needs to be instant as we're instantiating things.
+        }
+
+        public void UpdateSpriteLocation()
+        {
+            Sprite.Position = new(Location.x * 32, Location.y * 32);
+            GD.PushWarning("Used an instant location setter! Make sure you know what you're doing!");
         }
 
         public void Attack(EntityBase target, CrewMember crewMember)
