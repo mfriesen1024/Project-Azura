@@ -1,6 +1,7 @@
 using Godot;
 using ProjectAzura.src.EngineObjects.Resources;
 using ProjectAzura.src.Entity;
+using ProjectAzura.src.UI;
 using System;
 
 namespace ProjectAzura.src.Management
