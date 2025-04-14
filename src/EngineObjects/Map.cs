@@ -29,7 +29,7 @@ namespace ProjectAzura.src.EngineObjects
             {
                 for (int y = 0; y < ubound.Y; y++)
                 {
-                    try { tiles[x, y] = hazardTable.IDToTile(GetCellAlternativeTile(new(x, y))); }
+                    try { tiles[x, y] = hazardTable.IDToTile(GetCellAtlasCoords(new(x, y))); }
                     // oob tiles are considered impassible, they can be ignored, but log it anyway.
                     catch (IndexOutOfRangeException ior) { GD.PushWarning(ior); }
                 }
