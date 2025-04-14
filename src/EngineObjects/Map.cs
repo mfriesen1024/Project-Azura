@@ -41,7 +41,13 @@ namespace ProjectAzura.src.EngineObjects
                 foes[i] = FoeData[i];
             }
 
-            InternalMapData = new() { Map = tiles, Party = GameManager.Instance.Party, FoeList = foes };
+            // TODO: This shouldn't be a try catch in final build.
+            try { InternalMapData = new() { Map = tiles, Party = GameManager.Instance.Party, FoeList = foes }; }
+            catch (Exception e) { GD.PushError(e); }
+
+            // Bring sprites into the scene!
+            foreach(Ship foe in foes) { AddChild(foe.Sprite); }
+            foreach(Ship partyMember in GameManager.Instance.Party) { AddChild(partyMember.Sprite); }
         }
     }
 }
