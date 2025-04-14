@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="HazardTable" load_steps=2 format=3 uid="uid://4waf2wa3ui8h"]
+
+[ext_resource type="Script" uid="uid://cok2kik2hg1vn" path="res://src/EngineObjects/Resources/HazardTable.cs" id="1_4nsxh"]
+
+[resource]
+script = ExtResource("1_4nsxh")
+normal = PackedVector2Array(0, 0, 2, 0, 3, 0, 4, 0, 2, 3, 3, 3, 4, 3, 2, 2, 4, 2, 10, 2, 1, 1, 1, 2, 0, 1, 0, 2)
+difficult = PackedVector2Array()
+impassible = PackedVector2Array()
+damaging = PackedVector2Array()
+metadata/_custom_type_script = "uid://cok2kik2hg1vn"
