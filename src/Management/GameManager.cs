@@ -1,6 +1,5 @@
 using Godot;
 using ProjectAzura.src.Entity;
-using RPGSystem.Entity;
 using System;
 
 namespace ProjectAzura.src.Management
@@ -18,8 +17,29 @@ namespace ProjectAzura.src.Management
 
         public override void _Ready()
         {
-            base._Ready();
+            // Double check that we only have one GM.
+            if (Instance == null) { Instance = this; }
+            else { Free(); }
 
+            InitEvents();
+            InitUI();
+
+            // Use this to activate things when everything is initialized.
+            Launch();
+        }
+
+        private void InitUI()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Launch()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void InitEvents()
+        {
             Ship.TurnStart = OnTurnStart;
         }
 
