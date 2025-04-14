@@ -14,6 +14,7 @@ namespace ProjectAzura.src.EngineObjects.Resources
         [Export] TypeModifierConstructor typeData;
         [Export] BaseStatsConstructor stats;
         [Export] CrewMemberData[] crewData;
+        [Export] Vector2I startLoc;
         CrewMember[] crew { get { return CastDataToFormattedArray(); } }
 
         private CrewMember[] CastDataToFormattedArray()
@@ -29,7 +30,7 @@ namespace ProjectAzura.src.EngineObjects.Resources
 
         public static implicit operator Ship(ShipConstructionData res)
         {
-            return new Ship(new(res.stats, [], res.typeData), res.crew, res.teamID);
+            return new Ship(new(res.stats, [], res.typeData), res.crew, res.teamID,res.startLoc);
         }
     }
 }
