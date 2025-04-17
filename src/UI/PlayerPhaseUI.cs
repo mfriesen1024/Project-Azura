@@ -61,6 +61,8 @@ namespace ProjectAzura.src.UI
                     }
                 }
             }
+
+            move.GrabFocus();
         }
     }
 }
