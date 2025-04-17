@@ -44,10 +44,12 @@ namespace ProjectAzura.src.UI
             brace.Disabled = true;
             repair.Disabled = true;
 
+            // Check every crewmember that hasn't acted.
             foreach (CrewMember cm in FocusedShip.Crew)
             {
                 if (!cm.HasActed)
                 {
+                    // Any action those crew members can take should be enabled.
                     foreach (ActionType at in cm.AvailableActions)
                     {
                         switch (at)
