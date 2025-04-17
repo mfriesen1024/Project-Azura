@@ -13,6 +13,8 @@ namespace ProjectAzura.src.UI
         [Export] ShipStatsDisplay currentShip, targetShip;
         [Export] Button move, attack, repair, brace, pass;
 
+        MoveMode moveMode;
+
         private const string up = "ui_up";
         private const string down = "ui_down";
         private const string left = "ui_left";
@@ -21,19 +23,31 @@ namespace ProjectAzura.src.UI
         public override void _EnterTree()
         {
             base._EnterTree();
-
-            camera.Position = FocusedShip.Sprite.Position;
+            FocusCamera();
             UpdateAvailableActions();
+        }
+
+        private void FocusCamera(MoveMode mode = MoveMode.view)
+        {
+            camera.Position = FocusedShip.Sprite.Position;
+            moveMode = mode;
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
         {
             base._UnhandledKeyInput(@event);
 
+            // TODO: this needs replacing with MoveCamera().
             if (Input.IsActionJustPressed(up)) { camera.Position += new Vector2(0, -32); }
             if (Input.IsActionJustPressed(down)) { camera.Position += new Vector2(0, 32); }
             if (Input.IsActionJustPressed(left)) { camera.Position += new Vector2(-32, 0); }
             if (Input.IsActionJustPressed(right)) { camera.Position += new Vector2(32, 0); }
+        }
+
+        // Implement better movement logic.
+        void MoveCamera(Vector2 direction)
+        {
+            throw new NotImplementedException();
         }
 
         void UpdateAvailableActions()
@@ -66,5 +80,6 @@ namespace ProjectAzura.src.UI
 
             move.GrabFocus();
         }
+        enum MoveMode { view, move, attack}
     }
 }
