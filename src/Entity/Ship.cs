@@ -20,6 +20,11 @@ namespace ProjectAzura.src.Entity
         public static Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
 
         /// <summary>
+        /// Called when a player ship ends their turn.
+        /// </summary>
+        public static Action TurnEnd = GlobalEventSystem.DoNothing;
+
+        /// <summary>
         /// A reference to our sprite engine side.
         /// </summary>
         public Sprite2D Sprite { get; protected set; }
@@ -98,6 +103,12 @@ namespace ProjectAzura.src.Entity
             // Handle turn deferring.
             if (shouldHalt) { TurnStart(this); }
             else { ExecuteFoeTurn(); }
+        }
+
+        public void EndTurn()
+        {
+            TurnEnd();
+            initiativeSystem.ResumeIteration();
         }
 
         void ExecuteFoeTurn()

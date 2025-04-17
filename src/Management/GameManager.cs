@@ -17,6 +17,7 @@ namespace ProjectAzura.src.Management
         public static GameManager Instance { get; private set; }
         public Ship[] Party { get; private set; }
         [Export] ShipConstructionData[] partyData;
+
         #region UIStuff
         [Export] PackedScene gameplayUI, loading, menus;
         public HUD HUD { get; private set; }
@@ -67,11 +68,17 @@ namespace ProjectAzura.src.Management
         private void InitEvents()
         {
             Ship.TurnStart = OnTurnStart;
+            Ship.TurnEnd = OnTurnEnd;
         }
 
         private void OnTurnStart(Ship ship)
         {
-            throw new NotImplementedException();
+            AddChild(PlayerPhaseUI);
+        }
+
+        void OnTurnEnd()
+        {
+            RemoveChild(PlayerPhaseUI);
         }
     }
 }
