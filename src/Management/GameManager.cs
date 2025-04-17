@@ -73,6 +73,7 @@ namespace ProjectAzura.src.Management
 
         private void OnTurnStart(Ship ship)
         {
+            PlayerPhaseUI.FocusedShip = ship;
             AddChild(PlayerPhaseUI);
         }
 
