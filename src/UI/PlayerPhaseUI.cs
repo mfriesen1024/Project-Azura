@@ -8,6 +8,7 @@ namespace ProjectAzura.src.UI
         internal Ship FocusedShip { get; set; }
         [Export] Camera2D camera;
         [Export] Sprite2D cursorMovableElement;
+        [Export] ShipStatsDisplay currentShip, opposingShip;
 
         private const string up = "ui_up";
         private const string down = "ui_down";
