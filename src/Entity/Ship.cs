@@ -15,7 +15,7 @@ namespace ProjectAzura.src.Entity
         InitiativeSystem initiativeSystem;
 
         /// <summary>
-        /// Called when our turn starts.
+        /// Called when this ship's turn starts, if its under player control.
         /// </summary>
         public static Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
 
