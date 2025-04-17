@@ -8,6 +8,7 @@ namespace ProjectAzura.src.UI
         internal Ship FocusedShip { get; set; }
         [Export] Camera2D camera;
         [Export] Sprite2D cursorMovableElement;
+
         private const string up="up";
         private const string down="down";
         private const string left="left";
