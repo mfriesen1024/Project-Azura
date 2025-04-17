@@ -3,16 +3,16 @@ using ProjectAzura.src.Entity;
 
 namespace ProjectAzura.src.UI
 {
-    public partial class PlayerPhaseUI:Control
+    public partial class PlayerPhaseUI : Control
     {
         internal Ship FocusedShip { get; set; }
         [Export] Camera2D camera;
         [Export] Sprite2D cursorMovableElement;
 
-        private const string up="up";
-        private const string down="down";
-        private const string left="left";
-        private const string right="right";
+        private const string up = "ui_up";
+        private const string down = "ui_down";
+        private const string left = "ui_left";
+        private const string right = "ui_right";
 
         public override void _EnterTree()
         {
