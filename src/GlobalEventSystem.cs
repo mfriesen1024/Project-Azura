@@ -8,5 +8,9 @@ namespace ProjectAzura.src
         internal static void DoNothing(Ship ship)
         {
         }
+
+        internal static void DoNothing()
+        {
+        }
     }
 }
