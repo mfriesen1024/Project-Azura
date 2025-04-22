@@ -12,5 +12,10 @@ namespace ProjectAzura.src
         internal static void DoNothing()
         {
         }
+
+        internal static void DoNothing(int obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

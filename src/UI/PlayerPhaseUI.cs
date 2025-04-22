@@ -1,24 +1,143 @@
 using Godot;
 using ProjectAzura.src.Character;
 using ProjectAzura.src.Entity;
+using RPGSystem.Systems;
+using RPGSystem.Util;
 using System;
+using System.Linq;
 
 namespace ProjectAzura.src.UI
 {
     public partial class PlayerPhaseUI : Control
     {
+        Action<int> CrewSelected = GlobalEventSystem.DoNothing;
+
         internal Ship FocusedShip { get; set; }
         [Export] Camera2D camera;
         [Export] Sprite2D cursorMovableElement;
         [Export] ShipStatsDisplay currentShip, targetShip;
+        [Export] Control actionButtonsParent, crewButtonsParent;
         [Export] Button move, attack, repair, brace, pass;
+        [Export] Button Gunner, HelmsMan, Officer;
 
-        MoveMode moveMode;
+
+        bool canMove;
 
         private const string up = "ui_up";
         private const string down = "ui_down";
         private const string left = "ui_left";
         private const string right = "ui_right";
+
+        public override void _Ready()
+        {
+            base._Ready();
+            move.Pressed += Move;
+            move.Pressed += FocusCamera;
+            attack.Pressed += Attack;
+            attack.Pressed += FocusCamera;
+            repair.Pressed += Repair;
+            repair.Pressed += FocusCamera;
+            brace.Pressed += Brace;
+            brace.Pressed += FocusCamera;
+            pass.Pressed += FocusedShip.EndTurn;
+
+            Gunner.Pressed += delegate { CrewSelected(0); };
+            HelmsMan.Pressed += delegate { CrewSelected(1); };
+            Officer.Pressed += delegate { CrewSelected(2); };
+        }
+
+        private void Brace()
+        {
+            CrewSelected += InternalBrace;
+            void InternalBrace(int t)
+            {
+                CrewMember cm = GetBestCrewmember(t);
+                GD.PrintErr(new NotImplementedException("brace is not implemented."));
+                CrewSelected -= InternalBrace;
+            }
+            RequestCrew(ActionType.Brace);
+        }
+
+        private void Repair()
+        {
+            CrewSelected += InternalRepair;
+            void InternalRepair(int t)
+            {
+                CrewMember cm = GetBestCrewmember(t);
+                GD.PrintErr(new NotImplementedException("repair is not implemented."));
+                CrewSelected -= InternalRepair;
+            }
+            RequestCrew(ActionType.Repair);
+        }
+
+        private void Attack()
+        {
+            CrewSelected += InternalAttack;
+            void InternalAttack(int t)
+            {
+                CrewMember cm = GetBestCrewmember(t);
+                Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(Position));
+                float dist = target.Sprite.Position.DistanceTo(Position);
+                if (dist == 0)
+                {
+                    FocusedShip.Attack(target, cm);
+                }
+                else
+                {
+                    GD.Print($"Attempted to attack a target at {target.Sprite.Position}, we're at {Position}");
+                }
+                CrewSelected -= InternalAttack;
+            }
+            RequestCrew(ActionType.Attack);
+        }
+
+        private void Move()
+        {
+            CrewSelected += InternalMove;
+            void InternalMove(int t)
+            {
+                CrewMember cm = GetBestCrewmember(t);
+                FocusedShip.Move(ScaledV2ToV2S(Position), cm);
+                CrewSelected -= InternalMove;
+            }
+            RequestCrew(ActionType.Move);
+        }
+
+        private void RequestCrew(ActionType at)
+        {
+            GD.PushWarning($"Very bad crew request performed. This should be fixed!!!");
+            Gunner.Disabled = !new Gunner().AvailableActions.ToList().Contains(at);
+            HelmsMan.Disabled = !new HelmsMan().AvailableActions.ToList().Contains(at);
+            Officer.Disabled = !new Officer().AvailableActions.ToList().Contains(at);
+            AddChild(crewButtonsParent);
+        }
+
+        static Vector2S ScaledV2ToV2S(Vector2 position)
+        {
+            return new((short)(position.X / 32), (short)(position.Y / 32));
+        }
+
+        static Vector2 V2SToScaledV2F(Vector2S vector)
+        {
+            return new Vector2(vector.x * 32, vector.y * 32);
+        }
+
+        CrewMember GetBestCrewmember(int type)
+        {
+            GD.PushWarning("GetBestCrewmember was called, currently this is going to get the first one. Please fix!!!");
+            RemoveChild(crewButtonsParent);
+            foreach(CrewMember cm in FocusedShip.Crew)
+            {
+                switch (type)
+                {
+                    case 0:if (cm is Gunner) { return cm; } break;
+                    case 1: if (cm is HelmsMan) { return cm; } break;
+                    case 2: if (cm is Officer) { return cm; } break;
+                    default: throw new ArgumentException($"{type} is not a valid crewmember type index for GetBestCrewmember.");
+                }
+            }
+            throw new InvalidOperationException();
+        }
 
         public override void _EnterTree()
         {
@@ -27,27 +146,31 @@ namespace ProjectAzura.src.UI
             UpdateAvailableActions();
         }
 
-        private void FocusCamera(MoveMode mode = MoveMode.view)
+        // Focus camera when preparing a move or attack action.
+        private void FocusCamera()
         {
             camera.Position = FocusedShip.Sprite.Position;
-            moveMode = mode;
+            canMove = true;
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
         {
             base._UnhandledKeyInput(@event);
-
-            // TODO: this needs replacing with MoveCamera().
-            if (Input.IsActionJustPressed(up)) { camera.Position += new Vector2(0, -32); }
-            if (Input.IsActionJustPressed(down)) { camera.Position += new Vector2(0, 32); }
-            if (Input.IsActionJustPressed(left)) { camera.Position += new Vector2(-32, 0); }
-            if (Input.IsActionJustPressed(right)) { camera.Position += new Vector2(32, 0); }
-        }
-
-        // Implement better movement logic.
-        void MoveCamera(Vector2 direction)
-        {
-            throw new NotImplementedException();
+            if (canMove)
+            {
+                if (Input.IsActionJustPressed(up)) { camera.Position += new Vector2(0, -32); }
+                else if (Input.IsActionJustPressed(down)) { camera.Position += new Vector2(0, 32); }
+                else if (Input.IsActionJustPressed(left)) { camera.Position += new Vector2(-32, 0); }
+                else if (Input.IsActionJustPressed(right)) { camera.Position += new Vector2(32, 0); }
+                else if (@event is InputEventKey iek)
+                {
+                    if (iek.Keycode == Key.Space || iek.Keycode == Key.Enter)
+                    {
+                        AddChild(actionButtonsParent);
+                        canMove = false;
+                    }
+                }
+            }
         }
 
         void UpdateAvailableActions()
@@ -80,6 +203,5 @@ namespace ProjectAzura.src.UI
 
             move.GrabFocus();
         }
-        enum MoveMode { view, move, attack}
     }
 }
