@@ -22,6 +22,7 @@ namespace ProjectAzura.src.Management
         [Export] PackedScene gameplayUI, loading, menus;
         public HUD HUD { get; private set; }
         public PlayerPhaseUI PlayerPhaseUI { get; private set; }
+        Control GameplayUI; // This enables parent adjustment for hiding outside of levels.
         Control mainMenu;
         Control loadScreen;
         Control winScreen;
@@ -57,7 +58,10 @@ namespace ProjectAzura.src.Management
 
         private void InitUI()
         {
-            throw new NotImplementedException();
+            GameplayUI = gameplayUI.Instantiate() as Control;
+            PlayerPhaseUI = GameplayUI.GetChild(0) as PlayerPhaseUI;
+            HUD = GameplayUI.GetChild(1) as HUD;
+            //throw new NotImplementedException();
         }
 
         private void Launch()
