@@ -54,14 +54,10 @@ namespace ProjectAzura.src.EngineObjects
             // Bring sprites into the scene!
             foreach(Ship foe in foes) { AddChild(foe.Sprite); }
             foreach(Ship partyMember in GameManager.Instance.Party) { AddChild(partyMember.Sprite); }
-        }
 
-        public override void _EnterTree()
-        {
-            base._EnterTree();
             Log.WriteAll($"Loading area {Name}.");
-            try { NavigationSystem.Instance.LoadArea(InternalMapData); } 
-            catch (NotImplementedException e) { Log.WriteAll($"Navsystem didn't implement loading fully yet.",LogLevel.warn); }
+            try { NavigationSystem.Instance.LoadArea(InternalMapData); }
+            catch (NotImplementedException e) { Log.WriteAll($"Navsystem didn't implement loading fully yet.", LogLevel.warn); }
             InitiativeSystem.CalculateInitiative();
             InitiativeSystem.ResumeIteration();
             Log.WriteAll($"Loaded area {Name}.");
