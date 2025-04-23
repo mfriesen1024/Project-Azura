@@ -73,6 +73,7 @@ namespace ProjectAzura.src.Management
         private void InitUI()
         {
             MainLog.WriteAll("Initializing UI.");
+            UIParent = new(); AddChild(UIParent);
             GameplayUI = gameplayUI.Instantiate() as Control;
             PlayerPhaseUI = GameplayUI.GetChild(0) as PlayerPhaseUI;
             HUD = GameplayUI.GetChild(1) as HUD;
