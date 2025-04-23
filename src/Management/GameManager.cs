@@ -68,6 +68,7 @@ namespace ProjectAzura.src.Management
             GameplayUI = gameplayUI.Instantiate() as Control;
             PlayerPhaseUI = GameplayUI.GetChild(0) as PlayerPhaseUI;
             HUD = GameplayUI.GetChild(1) as HUD;
+            GameplayUI.RemoveChild(PlayerPhaseUI);
 
             GD.PrintErr(new NotImplementedException("Only Gameplay UI is implemented."));
         }
