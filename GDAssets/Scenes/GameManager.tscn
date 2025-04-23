@@ -1,8 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://cboin25saaw8w"]
+[gd_scene load_steps=11 format=3 uid="uid://cboin25saaw8w"]
 
 [ext_resource type="Script" uid="uid://bbfuoc5fq2m2j" path="res://src/Management/GameManager.cs" id="1_tgrrh"]
 [ext_resource type="PackedScene" uid="uid://byhp7cumaivnt" path="res://GDAssets/Scenes/GameplayUI.tscn" id="2_jnt5p"]
+[ext_resource type="Script" uid="uid://c2fxtcakpq2k2" path="res://src/EngineObjects/Resources/CrewMemberData.cs" id="2_tpae1"]
+[ext_resource type="Script" uid="uid://b67pmxb12vjjq" path="res://src/EngineObjects/Resources/ShipConstructionData.cs" id="3_64xna"]
+[ext_resource type="PackedScene" uid="uid://ck7ciubxqcrrp" path="res://GDAssets/Scenes/DebugSprite.tscn" id="4_euadd"]
+[ext_resource type="Script" uid="uid://dthekyf6lpv41" path="res://src/EngineObjects/Resources/BaseStatsConstructor.cs" id="5_emkmr"]
+[ext_resource type="Resource" uid="uid://h7waeya3kedl" path="res://GDAssets/Presets/Standard.typedata.tres" id="6_tudad"]
+
+[sub_resource type="Resource" id="Resource_15uc0"]
+script = ExtResource("2_tpae1")
+type = 2
+power = 1.0
+actions = PackedInt32Array()
+metadata/_custom_type_script = "uid://c2fxtcakpq2k2"
+
+[sub_resource type="Resource" id="Resource_j2bjj"]
+script = ExtResource("5_emkmr")
+hull = 0
+wepPower = 0
+speed = 0
+metadata/_custom_type_script = "uid://dthekyf6lpv41"
+
+[sub_resource type="Resource" id="Resource_ah5ol"]
+script = ExtResource("3_64xna")
+spritePrefab = ExtResource("4_euadd")
+typeData = ExtResource("6_tudad")
+stats = SubResource("Resource_j2bjj")
+crewData = Array[Object]([SubResource("Resource_15uc0")])
+startLoc = Vector2i(3, 2)
+teamID = 0
+metadata/_custom_type_script = "uid://b67pmxb12vjjq"
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_tgrrh")
+partyData = Array[Object]([SubResource("Resource_ah5ol")])
 gameplayUI = ExtResource("2_jnt5p")
