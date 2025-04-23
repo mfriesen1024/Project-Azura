@@ -17,11 +17,11 @@ namespace ProjectAzura.src.Management
         /// The singleton instance of our GM.
         /// </summary>
         public static GameManager Instance { get; private set; }
-        public InitiativeSystem InitiativeSystem { get; private set; }
+        public InitiativeSystem InitiativeSystem { get => CurrentMap.InitiativeSystem; }
         public Ship[] Party { get; private set; }
         [Export] ShipConstructionData[] partyData;
 
-        public Map DemoMap { get; private set; }
+        public Map CurrentMap { get; private set; }
         [Export] PackedScene DemoScene;
 
         #region UIStuff
@@ -52,8 +52,7 @@ namespace ProjectAzura.src.Management
 
         private void InitSystems()
         {
-            DemoMap = DemoScene.Instantiate() as Map;
-            InitiativeSystem = new InitiativeSystem([Party,DemoMap.InternalMapData.FoeList]);
+            CurrentMap = DemoScene.Instantiate() as Map;
         }
 
         private void InitMiscObjects()
@@ -74,7 +73,7 @@ namespace ProjectAzura.src.Management
 
         private void Launch()
         {
-            AddChild(DemoMap);
+            AddChild(CurrentMap);
             AddChild(GameplayUI);
         }
 

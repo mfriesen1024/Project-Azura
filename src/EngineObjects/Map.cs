@@ -3,6 +3,7 @@ using ProjectAzura.src.EngineObjects.Resources;
 using ProjectAzura.src.Entity;
 using ProjectAzura.src.Management;
 using RPGSystem.Encounter;
+using RPGSystem.Systems;
 using RPGSystem.Util;
 using System;
 
@@ -13,6 +14,7 @@ namespace ProjectAzura.src.EngineObjects
         // The upper bounds. We should only use positive coordinates so things don't break.
         [Export(PropertyHint.None, "The +x +y corner of the map.")] Vector2I ubound;
         [Export(PropertyHint.ResourceType, "HazardTable")] HazardTable hazardTable;
+        public InitiativeSystem InitiativeSystem { get; protected set; }
         public Area InternalMapData { get; protected set; }
         [Export] ShipConstructionData[] FoeData;
 
@@ -40,6 +42,8 @@ namespace ProjectAzura.src.EngineObjects
             {
                 foes[i] = FoeData[i];
             }
+
+            InitiativeSystem = new([GameManager.Instance.Party, foes]);
 
             // TODO: This shouldn't be a try catch in final build.
             try { InternalMapData = new() { Map = tiles, Party = GameManager.Instance.Party, FoeList = foes }; }
