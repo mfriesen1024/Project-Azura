@@ -23,11 +23,6 @@ gunnerButton = NodePath("CrewButtonContainer/gun")
 helmsmanButton = NodePath("CrewButtonContainer/helm")
 officerButton = NodePath("CrewButtonContainer/officer")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-
-[node name="Cursor" type="Sprite2D" parent="."]
-
 [node name="ActionButtonContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 3
@@ -83,3 +78,8 @@ text = "Helmsman"
 [node name="officer" type="Button" parent="CrewButtonContainer"]
 layout_mode = 2
 text = "Officer"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Cursor" type="Sprite2D" parent="."]
