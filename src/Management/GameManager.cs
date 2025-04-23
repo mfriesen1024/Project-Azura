@@ -25,6 +25,7 @@ namespace ProjectAzura.src.Management
         [Export] PackedScene DemoScene;
 
         #region UIStuff
+        CanvasLayer UIParent;
         [Export] PackedScene gameplayUI, loading, menus;
         public HUD HUD { get; private set; }
         public PlayerPhaseUI PlayerPhaseUI { get; private set; }
@@ -76,7 +77,7 @@ namespace ProjectAzura.src.Management
         private void Launch()
         {
             AddChild(CurrentMap);
-            AddChild(GameplayUI);
+            UIParent.AddChild(GameplayUI);
         }
 
         private void InitEvents()
@@ -88,12 +89,12 @@ namespace ProjectAzura.src.Management
         private void OnTurnStart(Ship ship)
         {
             PlayerPhaseUI.FocusedShip = ship;
-            AddChild(PlayerPhaseUI);
+            UIParent.AddChild(PlayerPhaseUI);
         }
 
         void OnTurnEnd()
         {
-            RemoveChild(PlayerPhaseUI);
+            UIParent.RemoveChild(PlayerPhaseUI);
         }
     }
 }
