@@ -61,7 +61,6 @@ namespace ProjectAzura.src.Management
             GameplayUI = gameplayUI.Instantiate() as Control;
             PlayerPhaseUI = GameplayUI.GetChild(0) as PlayerPhaseUI;
             HUD = GameplayUI.GetChild(1) as HUD;
-            //throw new NotImplementedException();
         }
 
         private void Launch()
