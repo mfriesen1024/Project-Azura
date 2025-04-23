@@ -16,7 +16,7 @@ namespace ProjectAzura.src.UI
         [ExportCategory("PrimaryNodes")]
         [Export] Camera2D camera;
         [Export] Sprite2D cursorMovableElement;
-        [Export] ShipStatsDisplay currentShip, targetShip;
+        [Export] ShipStatsDisplay currentShipDisplay, targetShipDisplay;
         [Export] Control actionButtonsParent, crewButtonsParent;
         [ExportCategory("ButtonNodes")]
         [Export] Button moveButton;
