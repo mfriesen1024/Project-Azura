@@ -29,7 +29,7 @@ spritePrefab = ExtResource("4_euadd")
 typeData = ExtResource("6_tudad")
 stats = SubResource("Resource_j2bjj")
 crewData = Array[Object]([SubResource("Resource_15uc0")])
-startLoc = Vector2i(5, 2)
+startLoc = Vector2i(7, 2)
 teamID = 0
 metadata/_custom_type_script = "uid://b67pmxb12vjjq"
 
