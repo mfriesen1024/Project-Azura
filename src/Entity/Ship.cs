@@ -50,7 +50,7 @@ namespace ProjectAzura.src.Entity
 
             short x = (short)location.X;
             short y = (short)location.Y;
-            Location = new(x,y);
+            Location = new(x, y);
 
             Sprite = spritePrefab.Instantiate() as Sprite2D;
             UpdateSpriteLocation(); // This needs to be instant as we're instantiating things.

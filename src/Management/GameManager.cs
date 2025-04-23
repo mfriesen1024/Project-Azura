@@ -53,6 +53,7 @@ namespace ProjectAzura.src.Management
         private void InitSystems()
         {
             CurrentMap = DemoScene.Instantiate() as Map;
+            NavigationSystem.Instance = new();
         }
 
         private void InitMiscObjects()
