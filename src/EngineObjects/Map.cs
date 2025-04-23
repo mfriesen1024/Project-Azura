@@ -60,7 +60,8 @@ namespace ProjectAzura.src.EngineObjects
         {
             base._EnterTree();
             Log.WriteAll($"Loading area {Name}.");
-            NavigationSystem.Instance.LoadArea(InternalMapData);
+            try { NavigationSystem.Instance.LoadArea(InternalMapData); } 
+            catch (NotImplementedException e) { Log.WriteAll($"Navsystem didn't implement loading fully yet.",LogLevel.warn); }
             InitiativeSystem.CalculateInitiative();
             InitiativeSystem.ResumeIteration();
             Log.WriteAll($"Loaded area {Name}.");
