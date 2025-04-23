@@ -209,12 +209,7 @@ namespace ProjectAzura.src.UI
                 }
             }
 
-            try
-            {
-                if (IsInsideTree()) { moveButton.GrabFocus(); }
-                else { throw new InvalidOperationException("Not in scene tree."); }
-            }
-            catch (Exception e) { GD.PushWarning(e); }
+            moveButton.GrabFocus();
         }
     }
 }
