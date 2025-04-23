@@ -47,7 +47,7 @@ namespace ProjectAzura.src.UI
             repairButton.Pressed += FocusCamera;
             braceButton.Pressed += Brace;
             braceButton.Pressed += FocusCamera;
-            passButton.Pressed += delegate { FocusedShip.EndTurn(); } ;
+            passButton.Pressed += delegate { FocusedShip.EndTurn(); };
 
             gunnerButton.Pressed += delegate { CrewSelected(0); };
             helmsmanButton.Pressed += delegate { CrewSelected(1); };
@@ -209,7 +209,12 @@ namespace ProjectAzura.src.UI
                 }
             }
 
-            moveButton.GrabFocus();
+            try
+            {
+                if (IsInsideTree()) { moveButton.GrabFocus(); }
+                else { throw new InvalidOperationException("Not in scene tree."); }
+            }
+            catch (Exception e) { GD.PushWarning(e); }
         }
     }
 }
