@@ -68,6 +68,8 @@ namespace ProjectAzura.src.Management
             Party = new Ship[partyData.Length];
             for (int i = 0; i < partyData.Length; i++) { Party[i] = partyData[i]; }
             MainLog.WriteAll("Party Initialized.");
+
+            AddChild(new InputDebugger());
         }
 
         private void InitUI()
