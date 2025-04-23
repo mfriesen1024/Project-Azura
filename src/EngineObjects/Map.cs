@@ -44,6 +44,7 @@ namespace ProjectAzura.src.EngineObjects
             }
 
             InitiativeSystem = new([GameManager.Instance.Party, foes]);
+            InitiativeSystem.CalculateInitiative();
 
             // TODO: This shouldn't be a try catch in final build.
             try { InternalMapData = new() { Map = tiles, Party = GameManager.Instance.Party, FoeList = foes }; }
@@ -52,6 +53,7 @@ namespace ProjectAzura.src.EngineObjects
             // Bring sprites into the scene!
             foreach(Ship foe in foes) { AddChild(foe.Sprite); }
             foreach(Ship partyMember in GameManager.Instance.Party) { AddChild(partyMember.Sprite); }
+            InitiativeSystem.ResumeIteration();
         }
     }
 }
