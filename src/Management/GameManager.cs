@@ -1,4 +1,5 @@
 using Godot;
+using KeystoneUtils.Logging;
 using ProjectAzura.src.EngineObjects;
 using ProjectAzura.src.EngineObjects.Resources;
 using ProjectAzura.src.Entity;
@@ -16,6 +17,7 @@ namespace ProjectAzura.src.Management
         /// <summary>
         /// The singleton instance of our GM.
         /// </summary>
+        public static Logger MainLog = new Logger(true,true,"logs\\","main","log");
         public static GameManager Instance { get; private set; }
         public InitiativeSystem InitiativeSystem { get => CurrentMap.InitiativeSystem; }
         public Ship[] Party { get; private set; }
@@ -39,7 +41,7 @@ namespace ProjectAzura.src.Management
         public override void _Ready()
         {
             // Double check that we only have one GM.
-            if (Instance == null) { Instance = this; }
+            if (Instance == null) { Instance = this; MainLog.WriteAll("Created GM."); }
             else { Free(); }
 
             InitEvents();
@@ -53,31 +55,39 @@ namespace ProjectAzura.src.Management
 
         private void InitSystems()
         {
+            MainLog.WriteAll("Initializing Systems.");
             CurrentMap = DemoScene.Instantiate() as Map;
             NavigationSystem.Instance = new();
+            MainLog.WriteAll("Systems Initialized.");
         }
 
         private void InitMiscObjects()
         {
             // Initialize party.
+            MainLog.WriteAll("Initializing Party.");
             Party = new Ship[partyData.Length];
             for (int i = 0; i < partyData.Length; i++) { Party[i] = partyData[i]; }
+            MainLog.WriteAll("Party Initialized.");
         }
 
         private void InitUI()
         {
+            MainLog.WriteAll("Initializing UI.");
             GameplayUI = gameplayUI.Instantiate() as Control;
             PlayerPhaseUI = GameplayUI.GetChild(0) as PlayerPhaseUI;
             HUD = GameplayUI.GetChild(1) as HUD;
             GameplayUI.RemoveChild(PlayerPhaseUI);
 
             GD.PrintErr(new NotImplementedException("Only Gameplay UI is implemented."));
+            MainLog.WriteAll("UI Initialized.");
         }
 
         private void Launch()
         {
+            MainLog.WriteAll("Launching.");
             AddChild(CurrentMap);
             UIParent.AddChild(GameplayUI);
+            MainLog.WriteAll("Launch Complete.");
         }
 
         private void InitEvents()
@@ -88,12 +98,14 @@ namespace ProjectAzura.src.Management
 
         private void OnTurnStart(Ship ship)
         {
+            MainLog.WriteAll("TurnStart Called.");
             PlayerPhaseUI.FocusedShip = ship;
             UIParent.AddChild(PlayerPhaseUI);
         }
 
         void OnTurnEnd()
         {
+            MainLog.WriteAll("TurnEndCalled.");
             UIParent.RemoveChild(PlayerPhaseUI);
         }
     }
