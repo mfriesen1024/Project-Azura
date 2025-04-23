@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cboin25saaw8w"]
+[gd_scene load_steps=3 format=3 uid="uid://cboin25saaw8w"]
 
 [ext_resource type="Script" uid="uid://bbfuoc5fq2m2j" path="res://src/Management/GameManager.cs" id="1_tgrrh"]
+[ext_resource type="PackedScene" uid="uid://byhp7cumaivnt" path="res://GDAssets/Scenes/GameplayUI.tscn" id="2_jnt5p"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_tgrrh")
+gameplayUI = ExtResource("2_jnt5p")
