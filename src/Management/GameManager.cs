@@ -1,7 +1,9 @@
 using Godot;
+using ProjectAzura.src.EngineObjects;
 using ProjectAzura.src.EngineObjects.Resources;
 using ProjectAzura.src.Entity;
 using ProjectAzura.src.UI;
+using RPGSystem.Systems;
 using System;
 
 namespace ProjectAzura.src.Management
@@ -15,8 +17,12 @@ namespace ProjectAzura.src.Management
         /// The singleton instance of our GM.
         /// </summary>
         public static GameManager Instance { get; private set; }
+        public InitiativeSystem InitiativeSystem { get; private set; }
         public Ship[] Party { get; private set; }
         [Export] ShipConstructionData[] partyData;
+
+        public Map DemoMap { get; private set; }
+        [Export] PackedScene DemoScene;
 
         #region UIStuff
         [Export] PackedScene gameplayUI, loading, menus;
@@ -61,6 +67,8 @@ namespace ProjectAzura.src.Management
             GameplayUI = gameplayUI.Instantiate() as Control;
             PlayerPhaseUI = GameplayUI.GetChild(0) as PlayerPhaseUI;
             HUD = GameplayUI.GetChild(1) as HUD;
+
+            GD.PrintErr(new NotImplementedException("Only Gameplay UI is implemented."));
         }
 
         private void Launch()
