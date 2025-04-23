@@ -52,6 +52,9 @@ namespace ProjectAzura.src.UI
             gunnerButton.Pressed += delegate { CrewSelected(0); };
             helmsmanButton.Pressed += delegate { CrewSelected(1); };
             officerButton.Pressed += delegate { CrewSelected(2); };
+
+            RemoveChild(actionButtonsParent);
+            RemoveChild(crewButtonsParent);
         }
 
         private void Brace()
