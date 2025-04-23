@@ -13,12 +13,20 @@ namespace ProjectAzura.src.UI
         Action<int> CrewSelected = GlobalEventSystem.DoNothing;
 
         internal Ship FocusedShip { get; set; }
+        [ExportCategory("PrimaryNodes")]
         [Export] Camera2D camera;
         [Export] Sprite2D cursorMovableElement;
         [Export] ShipStatsDisplay currentShip, targetShip;
         [Export] Control actionButtonsParent, crewButtonsParent;
-        [Export] Button move, attack, repair, brace, pass;
-        [Export] Button Gunner, HelmsMan, Officer;
+        [ExportCategory("ButtonNodes")]
+        [Export] Button moveButton;
+        [Export] Button attackButton;
+        [Export] Button repairButton;
+        [Export] Button braceButton;
+        [Export] Button passButton;
+        [Export] Button gunnerButton;
+        [Export] Button helmsmanButton;
+        [Export] Button officerButton;
 
 
         bool canMove;
@@ -31,19 +39,19 @@ namespace ProjectAzura.src.UI
         public override void _Ready()
         {
             base._Ready();
-            move.Pressed += Move;
-            move.Pressed += FocusCamera;
-            attack.Pressed += Attack;
-            attack.Pressed += FocusCamera;
-            repair.Pressed += Repair;
-            repair.Pressed += FocusCamera;
-            brace.Pressed += Brace;
-            brace.Pressed += FocusCamera;
-            pass.Pressed += FocusedShip.EndTurn;
+            moveButton.Pressed += Move;
+            moveButton.Pressed += FocusCamera;
+            attackButton.Pressed += Attack;
+            attackButton.Pressed += FocusCamera;
+            repairButton.Pressed += Repair;
+            repairButton.Pressed += FocusCamera;
+            braceButton.Pressed += Brace;
+            braceButton.Pressed += FocusCamera;
+            passButton.Pressed += FocusedShip.EndTurn;
 
-            Gunner.Pressed += delegate { CrewSelected(0); };
-            HelmsMan.Pressed += delegate { CrewSelected(1); };
-            Officer.Pressed += delegate { CrewSelected(2); };
+            gunnerButton.Pressed += delegate { CrewSelected(0); };
+            helmsmanButton.Pressed += delegate { CrewSelected(1); };
+            officerButton.Pressed += delegate { CrewSelected(2); };
         }
 
         private void Brace()
@@ -106,9 +114,9 @@ namespace ProjectAzura.src.UI
         private void RequestCrew(ActionType at)
         {
             GD.PushWarning($"Very bad crew request performed. This should be fixed!!!");
-            Gunner.Disabled = !new Gunner().AvailableActions.ToList().Contains(at);
-            HelmsMan.Disabled = !new HelmsMan().AvailableActions.ToList().Contains(at);
-            Officer.Disabled = !new Officer().AvailableActions.ToList().Contains(at);
+            gunnerButton.Disabled = !new Gunner().AvailableActions.ToList().Contains(at);
+            helmsmanButton.Disabled = !new HelmsMan().AvailableActions.ToList().Contains(at);
+            officerButton.Disabled = !new Officer().AvailableActions.ToList().Contains(at);
             AddChild(crewButtonsParent);
         }
 
@@ -126,11 +134,11 @@ namespace ProjectAzura.src.UI
         {
             GD.PushWarning("GetBestCrewmember was called, currently this is going to get the first one. Please fix!!!");
             RemoveChild(crewButtonsParent);
-            foreach(CrewMember cm in FocusedShip.Crew)
+            foreach (CrewMember cm in FocusedShip.Crew)
             {
                 switch (type)
                 {
-                    case 0:if (cm is Gunner) { return cm; } break;
+                    case 0: if (cm is Gunner) { return cm; } break;
                     case 1: if (cm is HelmsMan) { return cm; } break;
                     case 2: if (cm is Officer) { return cm; } break;
                     default: throw new ArgumentException($"{type} is not a valid crewmember type index for GetBestCrewmember.");
@@ -176,10 +184,10 @@ namespace ProjectAzura.src.UI
         void UpdateAvailableActions()
         {
             // First disable everything.
-            move.Disabled = true;
-            attack.Disabled = true;
-            brace.Disabled = true;
-            repair.Disabled = true;
+            moveButton.Disabled = true;
+            attackButton.Disabled = true;
+            braceButton.Disabled = true;
+            repairButton.Disabled = true;
 
             // Check every crewmember that hasn't acted.
             foreach (CrewMember cm in FocusedShip.Crew)
@@ -191,17 +199,17 @@ namespace ProjectAzura.src.UI
                     {
                         switch (at)
                         {
-                            case ActionType.Move: move.Disabled = FocusedShip.hasMoved; break;
-                            case ActionType.Attack: attack.Disabled = false; break;
-                            case ActionType.Brace: brace.Disabled = false; break;
-                            case ActionType.Repair: repair.Disabled = false; break;
+                            case ActionType.Move: moveButton.Disabled = FocusedShip.hasMoved; break;
+                            case ActionType.Attack: attackButton.Disabled = false; break;
+                            case ActionType.Brace: braceButton.Disabled = false; break;
+                            case ActionType.Repair: repairButton.Disabled = false; break;
                             default: GD.PrintErr(new NotImplementedException($"{at} is not implemented in playerphase ui")); break;
                         }
                     }
                 }
             }
 
-            move.GrabFocus();
+            moveButton.GrabFocus();
         }
     }
 }
