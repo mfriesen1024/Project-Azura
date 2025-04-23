@@ -1,4 +1,5 @@
 using Godot;
+using KeystoneUtils.Logging;
 using ProjectAzura.src.EngineObjects.Resources;
 using ProjectAzura.src.Entity;
 using ProjectAzura.src.Management;
@@ -14,6 +15,7 @@ namespace ProjectAzura.src.EngineObjects
         // The upper bounds. We should only use positive coordinates so things don't break.
         [Export(PropertyHint.None, "The +x +y corner of the map.")] Vector2I ubound;
         [Export(PropertyHint.ResourceType, "HazardTable")] HazardTable hazardTable;
+        Logger Log { get => GameManager.MainLog; }
         public InitiativeSystem InitiativeSystem { get; protected set; }
         public Area InternalMapData { get; protected set; }
         [Export] ShipConstructionData[] FoeData;
@@ -44,7 +46,6 @@ namespace ProjectAzura.src.EngineObjects
             }
 
             InitiativeSystem = new([GameManager.Instance.Party, foes]);
-            InitiativeSystem.CalculateInitiative();
 
             // TODO: This shouldn't be a try catch in final build.
             try { InternalMapData = new() { Map = tiles, Party = GameManager.Instance.Party, FoeList = foes }; }
@@ -53,7 +54,16 @@ namespace ProjectAzura.src.EngineObjects
             // Bring sprites into the scene!
             foreach(Ship foe in foes) { AddChild(foe.Sprite); }
             foreach(Ship partyMember in GameManager.Instance.Party) { AddChild(partyMember.Sprite); }
+        }
+
+        public override void _EnterTree()
+        {
+            base._EnterTree();
+            Log.WriteAll($"Loading area {Name}.");
+            NavigationSystem.Instance.LoadArea(InternalMapData);
+            InitiativeSystem.CalculateInitiative();
             InitiativeSystem.ResumeIteration();
+            Log.WriteAll($"Loaded area {Name}.");
         }
     }
 }
