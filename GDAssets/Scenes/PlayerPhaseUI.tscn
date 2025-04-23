@@ -24,6 +24,7 @@ helmsmanButton = NodePath("CrewButtonContainer/helm")
 officerButton = NodePath("CrewButtonContainer/officer")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
 
 [node name="Cursor" type="Sprite2D" parent="."]
 
