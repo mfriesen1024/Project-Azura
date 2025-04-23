@@ -1,5 +1,6 @@
 using Godot;
 using ProjectAzura.src.Character;
+using ProjectAzura.src.Management;
 using RPGSystem.Entity;
 using RPGSystem.Stats;
 using RPGSystem.Systems;
@@ -12,7 +13,7 @@ namespace ProjectAzura.src.Entity
     internal class Ship : EntityBase
     {
         // We somehow need a reference to the initiative system. How we get it? Not sure.
-        InitiativeSystem initiativeSystem;
+        InitiativeSystem initiativeSystem { get => GameManager.Instance.InitiativeSystem; }
 
         /// <summary>
         /// Called when this ship's turn starts, if its under player control.

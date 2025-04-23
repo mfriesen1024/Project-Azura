@@ -42,8 +42,8 @@ namespace ProjectAzura.src.Management
             else { Free(); }
 
             InitEvents();
-            InitSystems();
             InitMiscObjects();
+            InitSystems();
             InitUI();
 
             // Use this to activate things when everything is initialized.
@@ -52,7 +52,8 @@ namespace ProjectAzura.src.Management
 
         private void InitSystems()
         {
-            GD.PrintErr(new NotImplementedException());
+            DemoMap = DemoScene.Instantiate() as Map;
+            InitiativeSystem = new InitiativeSystem([Party,DemoMap.InternalMapData.FoeList]);
         }
 
         private void InitMiscObjects()
@@ -73,7 +74,8 @@ namespace ProjectAzura.src.Management
 
         private void Launch()
         {
-            throw new NotImplementedException();
+            AddChild(DemoMap);
+            AddChild(GameplayUI);
         }
 
         private void InitEvents()
