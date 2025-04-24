@@ -11,7 +11,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e7cpp")
 camera = NodePath("Camera2D")
-cursorMovableElement = NodePath("Cursor")
+cursorMovableElement = NodePath("Camera2D/Cursor")
 actionButtonsParent = NodePath("ActionButtonContainer")
 crewButtonsParent = NodePath("CrewButtonContainer")
 moveButton = NodePath("ActionButtonContainer/mov")
@@ -80,6 +80,5 @@ layout_mode = 2
 text = "Officer"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
 
-[node name="Cursor" type="Sprite2D" parent="."]
+[node name="Cursor" type="Sprite2D" parent="Camera2D"]
