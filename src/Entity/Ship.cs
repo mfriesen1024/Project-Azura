@@ -8,6 +8,7 @@ using RPGSystem.Systems;
 using RPGSystem.Util;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace ProjectAzura.src.Entity
 {
@@ -87,6 +88,11 @@ namespace ProjectAzura.src.Entity
                 {
                     // put animation code here.
                     GD.PrintErr(new NotImplementedException("Animation not implemented."));
+
+                    Location += instruction;
+
+                    // For now, we should use the instant location setter. This should be fixed later though.
+                    UpdateSpriteLocation();
                 }
                 hasMoved = true;
 
