@@ -115,11 +115,12 @@ namespace ProjectAzura.src.UI
 
         private void Move()
         {
+            Vector2S targetPos = ScaledV2ToV2S(cursorMovableElement.Position);
             CrewSelected += InternalMove;
             void InternalMove(int t)
             {
                 CrewMember cm = GetBestCrewmember(t);
-                FocusedShip.Move(ScaledV2ToV2S(Position), cm);
+                FocusedShip.Move(targetPos, cm);
                 CrewSelected -= InternalMove;
             }
             RequestCrew(ActionType.Move);
