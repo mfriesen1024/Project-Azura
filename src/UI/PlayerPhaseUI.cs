@@ -47,7 +47,7 @@ namespace ProjectAzura.src.UI
             repairButton.Pressed += FocusCamera;
             braceButton.Pressed += Brace;
             braceButton.Pressed += FocusCamera;
-            passButton.Pressed += delegate { FocusedShip.EndTurn(); };
+            passButton.Pressed += Pass;
 
             gunnerButton.Pressed += delegate { CrewSelected(0); };
             helmsmanButton.Pressed += delegate { CrewSelected(1); };
@@ -55,6 +55,11 @@ namespace ProjectAzura.src.UI
 
             RemoveChild(actionButtonsParent);
             RemoveChild(crewButtonsParent);
+        }
+
+        private void Pass()
+        {
+            FocusedShip.EndTurn();
         }
 
         private void Brace()
