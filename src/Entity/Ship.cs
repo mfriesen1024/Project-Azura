@@ -1,4 +1,5 @@
 using Godot;
+using KeystoneUtils.Logging;
 using ProjectAzura.src.Character;
 using ProjectAzura.src.Management;
 using RPGSystem.Entity;
@@ -71,7 +72,7 @@ namespace ProjectAzura.src.Entity
 
         public override void Attack(EntityBase target)
         {
-            throw new NotImplementedException();
+            GameManager.MainLog.WriteAll($"{new NotImplementedException()}", LogLevel.error);
         }
 
         public void Move(Vector2S newLoc, CrewMember crewMember)
