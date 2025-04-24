@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cbn2u5x7ami2v"]
+[gd_scene load_steps=3 format=3 uid="uid://cbn2u5x7ami2v"]
 
 [ext_resource type="Script" uid="uid://daqsj05p6v3xc" path="res://src/UI/PlayerPhaseUI.cs" id="1_e7cpp"]
+[ext_resource type="Texture2D" uid="uid://cviynvp31fv30" path="res://ProgrammerArt/Cursor/RPGCursor.png" id="2_w7j75"]
 
 [node name="PlayerPhaseUI" type="Control" node_paths=PackedStringArray("camera", "cursorMovableElement", "actionButtonsParent", "crewButtonsParent", "moveButton", "attackButton", "repairButton", "braceButton", "passButton", "gunnerButton", "helmsmanButton", "officerButton")]
 layout_mode = 3
@@ -82,3 +83,4 @@ text = "Officer"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Cursor" type="Sprite2D" parent="Camera2D"]
+texture = ExtResource("2_w7j75")
