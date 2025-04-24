@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_e7cpp")
 camera = NodePath("Camera2D")
-cursorMovableElement = NodePath("Camera2D/Cursor")
+cursorMovableElement = NodePath("Cursor")
 actionButtonsParent = NodePath("ActionButtonContainer")
 crewButtonsParent = NodePath("CrewButtonContainer")
 moveButton = NodePath("ActionButtonContainer/mov")
@@ -80,7 +80,8 @@ text = "Helmsman"
 layout_mode = 2
 text = "Officer"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="Cursor" type="Sprite2D" parent="Camera2D"]
+[node name="Cursor" type="Sprite2D" parent="."]
 texture = ExtResource("2_w7j75")
+offset = Vector2(16, 16)
+
+[node name="Camera2D" type="Camera2D" parent="."]
