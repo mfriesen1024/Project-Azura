@@ -65,6 +65,7 @@ namespace ProjectAzura.src.UI
 
         private void Pass()
         {
+            RemoveChild(actionButtonsParent);
             FocusedShip.EndTurn();
         }
 
