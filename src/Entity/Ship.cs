@@ -1,5 +1,7 @@
 using Godot;
+using KeystoneUtils.Logging;
 using ProjectAzura.src.Character;
+using ProjectAzura.src.Management;
 using RPGSystem.Entity;
 using RPGSystem.Stats;
 using RPGSystem.Systems;
@@ -12,12 +14,22 @@ namespace ProjectAzura.src.Entity
     internal class Ship : EntityBase
     {
         // We somehow need a reference to the initiative system. How we get it? Not sure.
-        InitiativeSystem initiativeSystem;
+        InitiativeSystem initiativeSystem { get => GameManager.Instance.InitiativeSystem; }
 
         /// <summary>
-        /// Called when our turn starts.
+        /// Called when this ship's turn starts, if its under player control.
         /// </summary>
         public static Action<Ship> TurnStart = GlobalEventSystem.DoNothing;
+
+        /// <summary>
+        /// Called when a player ship ends their turn.
+        /// </summary>
+        public static Action TurnEnd = GlobalEventSystem.DoNothing;
+
+        /// <summary>
+        /// A reference to our sprite engine side.
+        /// </summary>
+        public Sprite2D Sprite { get; protected set; }
 
         /// <summary>
         /// Array of crew members on board the ship.
@@ -32,14 +44,23 @@ namespace ProjectAzura.src.Entity
         public int defaultMovement;
         public bool hasMoved;
 
-        public Ship(ShipStatController statController, CrewMember[] crew, int teamID, Vector2I location) : base(statController)
+        public Ship(ShipStatController statController, CrewMember[] crew, int teamID, Vector2I location, PackedScene spritePrefab) : base(statController)
         {
             Crew = crew;
             this.teamID = teamID;
 
             short x = (short)location.X;
             short y = (short)location.Y;
-            Location = new(x,y);
+            Location = new(x, y);
+
+            Sprite = spritePrefab.Instantiate() as Sprite2D;
+            UpdateSpriteLocation(); // This needs to be instant as we're instantiating things.
+        }
+
+        public void UpdateSpriteLocation()
+        {
+            Sprite.Position = new(Location.x * 32, Location.y * 32);
+            GD.PushWarning("Used an instant location setter! Make sure you know what you're doing!");
         }
 
         public void Attack(EntityBase target, CrewMember crewMember)
@@ -51,7 +72,7 @@ namespace ProjectAzura.src.Entity
 
         public override void Attack(EntityBase target)
         {
-            throw new NotImplementedException();
+            GameManager.MainLog.WriteAll($"{new NotImplementedException()}", LogLevel.error);
         }
 
         public void Move(Vector2S newLoc, CrewMember crewMember)
@@ -84,6 +105,12 @@ namespace ProjectAzura.src.Entity
             // Handle turn deferring.
             if (shouldHalt) { TurnStart(this); }
             else { ExecuteFoeTurn(); }
+        }
+
+        public void EndTurn()
+        {
+            TurnEnd();
+            initiativeSystem.ResumeIteration();
         }
 
         void ExecuteFoeTurn()

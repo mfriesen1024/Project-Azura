@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="TypeModifierConstructor" load_steps=2 format=3 uid="uid://h7waeya3kedl"]
+
+[ext_resource type="Script" uid="uid://doryj6uumusjm" path="res://src/EngineObjects/Resources/TypeModifierConstructor.cs" id="1_l1cjy"]
+
+[resource]
+script = ExtResource("1_l1cjy")
+trueDamage = 1.0
+explosive = 1.0
+piercing = 1.0
+laser = 1.0
+metadata/_custom_type_script = "uid://doryj6uumusjm"

@@ -1,7 +1,6 @@
 using Godot;
 using ProjectAzura.src.Character;
 using ProjectAzura.src.Entity;
-using System.Linq;
 
 namespace ProjectAzura.src.EngineObjects.Resources
 {
@@ -11,6 +10,7 @@ namespace ProjectAzura.src.EngineObjects.Resources
     [GlobalClass]
     partial class ShipConstructionData : Resource
     {
+        [Export] PackedScene spritePrefab;
         [Export] TypeModifierConstructor typeData;
         [Export] BaseStatsConstructor stats;
         [Export] CrewMemberData[] crewData;
@@ -20,7 +20,8 @@ namespace ProjectAzura.src.EngineObjects.Resources
         private CrewMember[] CastDataToFormattedArray()
         {
             CrewMember[] newArray = new CrewMember[crewData.Length];
-            for (int i = 0; i < crewData.Length; i++) {
+            for (int i = 0; i < crewData.Length; i++)
+            {
                 newArray[i] = crewData[i];
             }
             return newArray;
@@ -30,7 +31,7 @@ namespace ProjectAzura.src.EngineObjects.Resources
 
         public static implicit operator Ship(ShipConstructionData res)
         {
-            return new Ship(new(res.stats, [], res.typeData), res.crew, res.teamID,res.startLoc);
+            return new Ship(new(res.stats, [], res.typeData), res.crew, res.teamID, res.startLoc, res.spritePrefab);
         }
     }
 }

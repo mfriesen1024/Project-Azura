@@ -5,6 +5,9 @@
     <RootNamespace>ProjectAzura</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="KeystoneUtils">
+      <HintPath>..\KeystoneUtils\Utils\bin\Debug\net8.0\KeystoneUtils.dll</HintPath>
+    </Reference>
     <Reference Include="RPGSystem">
       <HintPath>..\RPGSystem\RPGSystem\bin\Debug\net8.0\RPGSystem.dll</HintPath>
     </Reference>

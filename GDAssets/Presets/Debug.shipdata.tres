@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="ShipConstructionData" load_steps=8 format=3 uid="uid://ctooa30vldwvk"]
+
+[ext_resource type="Script" uid="uid://c2fxtcakpq2k2" path="res://src/EngineObjects/Resources/CrewMemberData.cs" id="1_fy3q7"]
+[ext_resource type="Script" uid="uid://b67pmxb12vjjq" path="res://src/EngineObjects/Resources/ShipConstructionData.cs" id="2_prasb"]
+[ext_resource type="PackedScene" uid="uid://ck7ciubxqcrrp" path="res://GDAssets/Scenes/DebugSprite.tscn" id="3_y7c3q"]
+[ext_resource type="Script" uid="uid://dthekyf6lpv41" path="res://src/EngineObjects/Resources/BaseStatsConstructor.cs" id="4_usr1a"]
+[ext_resource type="Resource" uid="uid://h7waeya3kedl" path="res://GDAssets/Presets/Standard.typedata.tres" id="5_nsgv3"]
+
+[sub_resource type="Resource" id="Resource_15uc0"]
+script = ExtResource("1_fy3q7")
+type = 2
+power = 1.0
+actions = PackedInt32Array()
+metadata/_custom_type_script = "uid://c2fxtcakpq2k2"
+
+[sub_resource type="Resource" id="Resource_j2bjj"]
+script = ExtResource("4_usr1a")
+hull = 0
+wepPower = 0
+speed = 0
+metadata/_custom_type_script = "uid://dthekyf6lpv41"
+
+[resource]
+script = ExtResource("2_prasb")
+spritePrefab = ExtResource("3_y7c3q")
+typeData = ExtResource("5_nsgv3")
+stats = SubResource("Resource_j2bjj")
+crewData = Array[Object]([SubResource("Resource_15uc0")])
+startLoc = Vector2i(3, 2)
+teamID = 1
+metadata/_custom_type_script = "uid://b67pmxb12vjjq"

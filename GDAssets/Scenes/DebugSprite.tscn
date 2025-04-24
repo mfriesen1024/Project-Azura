@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck7ciubxqcrrp"]
+
+[sub_resource type="Gradient" id="Gradient_15h1s"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uygox"]
+gradient = SubResource("Gradient_15h1s")
+width = 32
+height = 32
+fill_to = Vector2(1, 1)
+
+[node name="DebugSprite" type="Sprite2D"]
+texture = SubResource("GradientTexture2D_uygox")
+offset = Vector2(16, 16)

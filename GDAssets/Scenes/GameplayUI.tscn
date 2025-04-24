@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://byhp7cumaivnt"]
+
+[ext_resource type="PackedScene" uid="uid://cbn2u5x7ami2v" path="res://GDAssets/Scenes/PlayerPhaseUI.tscn" id="1_1r0jb"]
+[ext_resource type="Script" uid="uid://b2de3cvepc104" path="res://src/UI/HUD.cs" id="2_bckqt"]
+
+[node name="GameplayUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PlayerPhaseUI" parent="." instance=ExtResource("1_1r0jb")]
+layout_mode = 1
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_bckqt")

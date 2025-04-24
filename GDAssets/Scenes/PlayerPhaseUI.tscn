@@ -1,0 +1,85 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbn2u5x7ami2v"]
+
+[ext_resource type="Script" uid="uid://daqsj05p6v3xc" path="res://src/UI/PlayerPhaseUI.cs" id="1_e7cpp"]
+
+[node name="PlayerPhaseUI" type="Control" node_paths=PackedStringArray("camera", "cursorMovableElement", "actionButtonsParent", "crewButtonsParent", "moveButton", "attackButton", "repairButton", "braceButton", "passButton", "gunnerButton", "helmsmanButton", "officerButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_e7cpp")
+camera = NodePath("Camera2D")
+cursorMovableElement = NodePath("Cursor")
+actionButtonsParent = NodePath("ActionButtonContainer")
+crewButtonsParent = NodePath("CrewButtonContainer")
+moveButton = NodePath("ActionButtonContainer/mov")
+attackButton = NodePath("ActionButtonContainer/atk")
+repairButton = NodePath("ActionButtonContainer/rep")
+braceButton = NodePath("ActionButtonContainer/brc")
+passButton = NodePath("ActionButtonContainer/pass")
+gunnerButton = NodePath("CrewButtonContainer/gun")
+helmsmanButton = NodePath("CrewButtonContainer/helm")
+officerButton = NodePath("CrewButtonContainer/officer")
+
+[node name="ActionButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="mov" type="Button" parent="ActionButtonContainer"]
+layout_mode = 2
+text = "Move"
+
+[node name="atk" type="Button" parent="ActionButtonContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="rep" type="Button" parent="ActionButtonContainer"]
+layout_mode = 2
+text = "Repair"
+
+[node name="brc" type="Button" parent="ActionButtonContainer"]
+layout_mode = 2
+text = "Brace"
+
+[node name="pass" type="Button" parent="ActionButtonContainer"]
+layout_mode = 2
+text = "Pass"
+
+[node name="CrewButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="gun" type="Button" parent="CrewButtonContainer"]
+layout_mode = 2
+text = "Gunner"
+
+[node name="helm" type="Button" parent="CrewButtonContainer"]
+layout_mode = 2
+text = "Helmsman"
+
+[node name="officer" type="Button" parent="CrewButtonContainer"]
+layout_mode = 2
+text = "Officer"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Cursor" type="Sprite2D" parent="."]
