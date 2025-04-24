@@ -100,7 +100,7 @@ namespace ProjectAzura.src.Entity
         public override void BeginTurn(out bool shouldHalt)
         {
             // We should not pause for player input if the ship isn't under player control.
-            shouldHalt = teamID != 0;
+            shouldHalt = teamID == 0;
 
             // Handle turn deferring.
             if (shouldHalt) { TurnStart(this); }

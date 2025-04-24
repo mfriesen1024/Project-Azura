@@ -69,7 +69,7 @@ namespace ProjectAzura.src.Management
             for (int i = 0; i < partyData.Length; i++) { Party[i] = partyData[i]; }
             MainLog.WriteAll("Party Initialized.");
 
-            AddChild(new InputDebugger());
+            //AddChild(new InputDebugger());
         }
 
         private void InitUI()
@@ -101,7 +101,7 @@ namespace ProjectAzura.src.Management
 
         private void OnTurnStart(Ship ship)
         {
-            MainLog.WriteAll("TurnStart Called.");
+            MainLog.WriteAll($"TurnStart Called by ship with team {ship.teamID}. This should be 0.");
             PlayerPhaseUI.FocusedShip = ship;
             UIParent.AddChild(PlayerPhaseUI);
         }
