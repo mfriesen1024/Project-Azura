@@ -218,7 +218,7 @@ namespace ProjectAzura.src.UI
                 }
             }
 
-            moveButton.GrabFocus();
+            //moveButton.GrabFocus();
         }
     }
 }
