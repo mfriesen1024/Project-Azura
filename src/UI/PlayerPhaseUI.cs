@@ -1,6 +1,7 @@
 using Godot;
 using ProjectAzura.src.Character;
 using ProjectAzura.src.Entity;
+using ProjectAzura.src.Management;
 using RPGSystem.Systems;
 using RPGSystem.Util;
 using System;
@@ -53,8 +54,13 @@ namespace ProjectAzura.src.UI
             helmsmanButton.Pressed += delegate { CrewSelected(1); };
             officerButton.Pressed += delegate { CrewSelected(2); };
 
+            // These 2 need to be reparented frequently.
             RemoveChild(actionButtonsParent);
             RemoveChild(crewButtonsParent);
+
+            // These need to not move within canvas layer.
+            camera.Reparent(GameManager.Instance);
+            cursorMovableElement.Reparent(GameManager.Instance);            
         }
 
         private void Pass()
@@ -166,7 +172,9 @@ namespace ProjectAzura.src.UI
         // Focus camera when preparing a move or attack action.
         private void FocusCamera()
         {
-            camera.Position = FocusedShip.Sprite.Position;
+            Vector2 focusedPosition = FocusedShip.Sprite.Position;
+            camera.Position = focusedPosition;
+            cursorMovableElement.Position = focusedPosition;
             canMove = true;
         }
 
@@ -187,6 +195,7 @@ namespace ProjectAzura.src.UI
                         canMove = false;
                     }
                 }
+                cursorMovableElement.Position = camera.Position;
             }
         }
 
