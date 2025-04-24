@@ -44,10 +44,12 @@ namespace ProjectAzura.src.Entity
         public int defaultMovement;
         public bool hasMoved;
 
-        public Ship(ShipStatController statController, CrewMember[] crew, int teamID, Vector2I location, PackedScene spritePrefab) : base(statController)
+        public Ship(ShipStatController statController, int movement, CrewMember[] crew, int teamID, Vector2I location, PackedScene spritePrefab) : base(statController)
         {
             Crew = crew;
             this.teamID = teamID;
+
+            defaultMovement = movement;
 
             short x = (short)location.X;
             short y = (short)location.Y;
