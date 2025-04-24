@@ -120,6 +120,7 @@ namespace ProjectAzura.src.UI
             gunnerButton.Disabled = !new Gunner().AvailableActions.ToList().Contains(at);
             helmsmanButton.Disabled = !new HelmsMan().AvailableActions.ToList().Contains(at);
             officerButton.Disabled = !new Officer().AvailableActions.ToList().Contains(at);
+            RemoveChild(actionButtonsParent);
             AddChild(crewButtonsParent);
         }
 
