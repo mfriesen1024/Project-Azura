@@ -100,7 +100,7 @@ namespace ProjectAzura.src.UI
         {
             // Determine position, target and distance before using the button callback.
             Vector2 position = cursorMovableElement.Position;
-            Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(position));
+            Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(true, ScaledV2ToV2S(position));
             float dist = target.Sprite.Position.DistanceTo(position);
 
             CrewSelected += InternalAttack;
