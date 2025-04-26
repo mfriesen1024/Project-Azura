@@ -31,7 +31,7 @@ namespace ProjectAzura.src.EngineObjects.Resources
 
         public static implicit operator Ship(ShipConstructionData res)
         {
-            return new Ship(new(res.stats, [], res.typeData), res.crew, res.teamID, res.startLoc, res.spritePrefab);
+            return new Ship(new(res.stats, [], res.typeData), res.stats.Movement, res.crew, res.teamID, res.startLoc, res.spritePrefab);
         }
     }
 }

@@ -18,6 +18,7 @@ script = ExtResource("4_usr1a")
 hull = 0
 wepPower = 0
 speed = 0
+Movement = 0
 metadata/_custom_type_script = "uid://dthekyf6lpv41"
 
 [resource]

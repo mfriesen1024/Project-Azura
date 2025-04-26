@@ -8,6 +8,7 @@ using RPGSystem.Systems;
 using RPGSystem.Util;
 using System;
 using System.Linq;
+using System.Threading;
 
 namespace ProjectAzura.src.Entity
 {
@@ -44,10 +45,12 @@ namespace ProjectAzura.src.Entity
         public int defaultMovement;
         public bool hasMoved;
 
-        public Ship(ShipStatController statController, CrewMember[] crew, int teamID, Vector2I location, PackedScene spritePrefab) : base(statController)
+        public Ship(ShipStatController statController, int movement, CrewMember[] crew, int teamID, Vector2I location, PackedScene spritePrefab) : base(statController)
         {
             Crew = crew;
             this.teamID = teamID;
+
+            defaultMovement = movement;
 
             short x = (short)location.X;
             short y = (short)location.Y;
@@ -55,6 +58,14 @@ namespace ProjectAzura.src.Entity
 
             Sprite = spritePrefab.Instantiate() as Sprite2D;
             UpdateSpriteLocation(); // This needs to be instant as we're instantiating things.
+
+            statController.Death += OnDeath;
+        }
+
+        private void OnDeath()
+        {
+            GameManager.MainLog.WriteAll($"Ship with team {teamID} and sprite named {Sprite} has died.", LogLevel.info);
+            Sprite.QueueFree();            
         }
 
         public void UpdateSpriteLocation()
@@ -73,6 +84,9 @@ namespace ProjectAzura.src.Entity
         public override void Attack(EntityBase target)
         {
             GameManager.MainLog.WriteAll($"{new NotImplementedException()}", LogLevel.error);
+
+            // For now, have everything use the explosive type.
+            StatController.Attack(target.StatController, DamageType.Explosive);
         }
 
         public void Move(Vector2S newLoc, CrewMember crewMember)
@@ -85,6 +99,11 @@ namespace ProjectAzura.src.Entity
                 {
                     // put animation code here.
                     GD.PrintErr(new NotImplementedException("Animation not implemented."));
+
+                    Location += instruction;
+
+                    // For now, we should use the instant location setter. This should be fixed later though.
+                    UpdateSpriteLocation();
                 }
                 hasMoved = true;
 
@@ -101,6 +120,10 @@ namespace ProjectAzura.src.Entity
         {
             // We should not pause for player input if the ship isn't under player control.
             shouldHalt = teamID == 0;
+
+            // When our turn starts, reset crew acted state, and ship moved states.
+            hasMoved = false;
+            foreach (CrewMember cm in Crew) { cm.HasActed = false; }
 
             // Handle turn deferring.
             if (shouldHalt) { TurnStart(this); }

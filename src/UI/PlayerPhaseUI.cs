@@ -41,9 +41,9 @@ namespace ProjectAzura.src.UI
         {
             base._Ready();
             moveButton.Pressed += Move;
-            moveButton.Pressed += FocusCamera;
+            //moveButton.Pressed += FocusCamera;
             attackButton.Pressed += Attack;
-            attackButton.Pressed += FocusCamera;
+            //attackButton.Pressed += FocusCamera;
             repairButton.Pressed += Repair;
             repairButton.Pressed += FocusCamera;
             braceButton.Pressed += Brace;
@@ -53,6 +53,9 @@ namespace ProjectAzura.src.UI
             gunnerButton.Pressed += delegate { CrewSelected(0); };
             helmsmanButton.Pressed += delegate { CrewSelected(1); };
             officerButton.Pressed += delegate { CrewSelected(2); };
+            gunnerButton.Pressed += FocusCamera;
+            helmsmanButton.Pressed += FocusCamera;
+            officerButton.Pressed += FocusCamera;
 
             // These 2 need to be reparented frequently.
             RemoveChild(actionButtonsParent);
@@ -60,11 +63,12 @@ namespace ProjectAzura.src.UI
 
             // These need to not move within canvas layer.
             camera.Reparent(GameManager.Instance);
-            cursorMovableElement.Reparent(GameManager.Instance);            
+            cursorMovableElement.Reparent(GameManager.Instance);
         }
 
         private void Pass()
         {
+            RemoveChild(actionButtonsParent);
             FocusedShip.EndTurn();
         }
 
@@ -94,19 +98,24 @@ namespace ProjectAzura.src.UI
 
         private void Attack()
         {
+            // Determine position, target and distance before using the button callback.
+            Vector2 position = cursorMovableElement.Position;
+            Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(true, ScaledV2ToV2S(position));
+            float cursorDist = target.Sprite.Position.DistanceTo(position);
+            float shipDist = target.Sprite.Position.DistanceTo(FocusedShip.Sprite.Position);
+
             CrewSelected += InternalAttack;
             void InternalAttack(int t)
             {
                 CrewMember cm = GetBestCrewmember(t);
-                Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(Position));
-                float dist = target.Sprite.Position.DistanceTo(Position);
-                if (dist == 0)
+                if (cursorDist == 0 && shipDist == 32)
                 {
                     FocusedShip.Attack(target, cm);
                 }
                 else
                 {
-                    GD.Print($"Attempted to attack a target at {target.Sprite.Position}, we're at {Position}");
+                    GD.Print($"Attempted to attack a target at {target.Sprite.Position}, we're at {FocusedShip.Sprite.Position} cursor is at {position}. " +
+                        $"Cursor distance is {cursorDist}, ship sprite distance is {shipDist}.");
                 }
                 CrewSelected -= InternalAttack;
             }
@@ -115,11 +124,12 @@ namespace ProjectAzura.src.UI
 
         private void Move()
         {
+            Vector2S targetPos = ScaledV2ToV2S(cursorMovableElement.Position);
             CrewSelected += InternalMove;
             void InternalMove(int t)
             {
                 CrewMember cm = GetBestCrewmember(t);
-                FocusedShip.Move(ScaledV2ToV2S(Position), cm);
+                FocusedShip.Move(targetPos, cm);
                 CrewSelected -= InternalMove;
             }
             RequestCrew(ActionType.Move);
@@ -151,12 +161,15 @@ namespace ProjectAzura.src.UI
             RemoveChild(crewButtonsParent);
             foreach (CrewMember cm in FocusedShip.Crew)
             {
-                switch (type)
+                if (!cm.HasActed)
                 {
-                    case 0: if (cm is Gunner) { return cm; } break;
-                    case 1: if (cm is HelmsMan) { return cm; } break;
-                    case 2: if (cm is Officer) { return cm; } break;
-                    default: throw new ArgumentException($"{type} is not a valid crewmember type index for GetBestCrewmember.");
+                    switch (type)
+                    {
+                        case 0: if (cm is Gunner) { return cm; } break;
+                        case 1: if (cm is HelmsMan) { return cm; } break;
+                        case 2: if (cm is Officer) { return cm; } break;
+                        default: throw new ArgumentException($"{type} is not a valid crewmember type index for GetBestCrewmember.");
+                    }
                 }
             }
             throw new InvalidOperationException();
@@ -166,12 +179,12 @@ namespace ProjectAzura.src.UI
         {
             base._EnterTree();
             FocusCamera();
-            UpdateAvailableActions();
         }
 
         // Focus camera when preparing a move or attack action.
         private void FocusCamera()
         {
+            UpdateAvailableActions();
             Vector2 focusedPosition = FocusedShip.Sprite.Position;
             camera.Position = focusedPosition;
             cursorMovableElement.Position = focusedPosition;

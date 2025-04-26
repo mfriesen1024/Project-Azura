@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BaseStatsConstructor" load_steps=2 format=3 uid="uid://dtq2mmg7bcg4j"]
+
+[ext_resource type="Script" uid="uid://dthekyf6lpv41" path="res://src/EngineObjects/Resources/BaseStatsConstructor.cs" id="1_f4arg"]
+
+[resource]
+script = ExtResource("1_f4arg")
+hull = 10
+wepPower = 5
+speed = 3
+Movement = 5
+metadata/_custom_type_script = "uid://dthekyf6lpv41"

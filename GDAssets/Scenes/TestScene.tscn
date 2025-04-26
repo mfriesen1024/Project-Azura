@@ -22,6 +22,7 @@ script = ExtResource("8_6vjgx")
 hull = 0
 wepPower = 0
 speed = 0
+Movement = 0
 metadata/_custom_type_script = "uid://dthekyf6lpv41"
 
 [sub_resource type="Resource" id="Resource_rvhwp"]
