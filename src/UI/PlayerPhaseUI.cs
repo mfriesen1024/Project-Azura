@@ -41,9 +41,9 @@ namespace ProjectAzura.src.UI
         {
             base._Ready();
             moveButton.Pressed += Move;
-            moveButton.Pressed += FocusCamera;
+            //moveButton.Pressed += FocusCamera;
             attackButton.Pressed += Attack;
-            attackButton.Pressed += FocusCamera;
+            //attackButton.Pressed += FocusCamera;
             repairButton.Pressed += Repair;
             repairButton.Pressed += FocusCamera;
             braceButton.Pressed += Brace;
@@ -53,6 +53,9 @@ namespace ProjectAzura.src.UI
             gunnerButton.Pressed += delegate { CrewSelected(0); };
             helmsmanButton.Pressed += delegate { CrewSelected(1); };
             officerButton.Pressed += delegate { CrewSelected(2); };
+            gunnerButton.Pressed += FocusCamera;
+            helmsmanButton.Pressed += FocusCamera;
+            officerButton.Pressed += FocusCamera;
 
             // These 2 need to be reparented frequently.
             RemoveChild(actionButtonsParent);
@@ -174,12 +177,12 @@ namespace ProjectAzura.src.UI
         {
             base._EnterTree();
             FocusCamera();
-            UpdateAvailableActions();
         }
 
         // Focus camera when preparing a move or attack action.
         private void FocusCamera()
         {
+            UpdateAvailableActions();
             Vector2 focusedPosition = FocusedShip.Sprite.Position;
             camera.Position = focusedPosition;
             cursorMovableElement.Position = focusedPosition;
