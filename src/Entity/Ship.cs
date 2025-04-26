@@ -59,7 +59,13 @@ namespace ProjectAzura.src.Entity
             Sprite = spritePrefab.Instantiate() as Sprite2D;
             UpdateSpriteLocation(); // This needs to be instant as we're instantiating things.
 
-            statController.Death += delegate { GameManager.MainLog.WriteAll($"Ship with team {teamID} and sprite named {Sprite} has died.",LogLevel.info); };
+            statController.Death += OnDeath;
+        }
+
+        private void OnDeath()
+        {
+            GameManager.MainLog.WriteAll($"Ship with team {teamID} and sprite named {Sprite} has died.", LogLevel.info);
+            Sprite.QueueFree();            
         }
 
         public void UpdateSpriteLocation()
