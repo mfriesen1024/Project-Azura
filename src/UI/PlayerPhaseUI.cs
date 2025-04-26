@@ -95,9 +95,10 @@ namespace ProjectAzura.src.UI
 
         private void Attack()
         {
-            // Determine target and distance before using the button callback.
-            Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(Position));
-            float dist = target.Sprite.Position.DistanceTo(Position);
+            // Determine position, target and distance before using the button callback.
+            Vector2 position = Position;
+            Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(position));
+            float dist = target.Sprite.Position.DistanceTo(position);
 
             CrewSelected += InternalAttack;
             void InternalAttack(int t)
@@ -109,7 +110,7 @@ namespace ProjectAzura.src.UI
                 }
                 else
                 {
-                    GD.Print($"Attempted to attack a target at {target.Sprite.Position}, we're at {Position}");
+                    GD.Print($"Attempted to attack a target at {target.Sprite.Position}, we're at {position}. ");
                 }
                 CrewSelected -= InternalAttack;
             }
