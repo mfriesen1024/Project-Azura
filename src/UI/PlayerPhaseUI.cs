@@ -60,7 +60,7 @@ namespace ProjectAzura.src.UI
 
             // These need to not move within canvas layer.
             camera.Reparent(GameManager.Instance);
-            cursorMovableElement.Reparent(GameManager.Instance);            
+            cursorMovableElement.Reparent(GameManager.Instance);
         }
 
         private void Pass()
@@ -95,12 +95,14 @@ namespace ProjectAzura.src.UI
 
         private void Attack()
         {
+            // Determine target and distance before using the button callback.
+            Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(Position));
+            float dist = target.Sprite.Position.DistanceTo(Position);
+
             CrewSelected += InternalAttack;
             void InternalAttack(int t)
             {
                 CrewMember cm = GetBestCrewmember(t);
-                Ship target = (Ship)NavigationSystem.Instance.FindNearestFoe(false, ScaledV2ToV2S(Position));
-                float dist = target.Sprite.Position.DistanceTo(Position);
                 if (dist == 0)
                 {
                     FocusedShip.Attack(target, cm);
