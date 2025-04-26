@@ -153,12 +153,15 @@ namespace ProjectAzura.src.UI
             RemoveChild(crewButtonsParent);
             foreach (CrewMember cm in FocusedShip.Crew)
             {
-                switch (type)
+                if (!cm.HasActed)
                 {
-                    case 0: if (cm is Gunner) { return cm; } break;
-                    case 1: if (cm is HelmsMan) { return cm; } break;
-                    case 2: if (cm is Officer) { return cm; } break;
-                    default: throw new ArgumentException($"{type} is not a valid crewmember type index for GetBestCrewmember.");
+                    switch (type)
+                    {
+                        case 0: if (cm is Gunner) { return cm; } break;
+                        case 1: if (cm is HelmsMan) { return cm; } break;
+                        case 2: if (cm is Officer) { return cm; } break;
+                        default: throw new ArgumentException($"{type} is not a valid crewmember type index for GetBestCrewmember.");
+                    }
                 }
             }
             throw new InvalidOperationException();
