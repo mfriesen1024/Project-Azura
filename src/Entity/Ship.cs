@@ -110,6 +110,10 @@ namespace ProjectAzura.src.Entity
             // We should not pause for player input if the ship isn't under player control.
             shouldHalt = teamID == 0;
 
+            // When our turn starts, reset crew acted state, and ship moved states.
+            hasMoved = false;
+            foreach (CrewMember cm in Crew) { cm.HasActed = false; }
+
             // Handle turn deferring.
             if (shouldHalt) { TurnStart(this); }
             else { ExecuteFoeTurn(); }
